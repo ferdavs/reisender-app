@@ -2,12 +2,10 @@
   import { User } from "../data/models";
   import { Api, container } from "../data/api/index";
   import { login as fbLogin } from "nativescript-facebook-7";
-  import { SecureStorage } from "nativescript-secure-storage";
-  import { getFacebookInfo } from "../util";
+  import { getFacebookInfo, storePut, storeDeleteAll } from "../util";
   import { navigate } from "svelte-native";
   import App from "./App.svelte";
   import Register from "./Register.svelte";
-  const store = new SecureStorage();
 
   const api = container.getNamed<Api>("Api", "mock");
   export let user = new User();
@@ -30,8 +28,7 @@
           user.username = res.email;
           user.name = res.name;
           user.loggedIn = true;
-          store
-            .set({ key: "user", value: JSON.stringify(user) })
+          storePut("user", JSON.stringify(user))
             .then((result) => {
               console.log("user store " + result);
               if (result) navigate({ page: App });
@@ -64,7 +61,11 @@
     <button text="Register" class="link" on:tap={onRegister} />
 
     <button text="Login" on:tap={onLogin} class="btn" />
-    <button text="Facebook Login" on:tap={onFBLogin} class="fb-login-button btn" />
+    <button
+      text="Facebook Login"
+      on:tap={onFBLogin}
+      class="fb-login-button btn"
+    />
   </stackLayout>
 </page>
 
@@ -75,7 +76,7 @@
     font-size: 18;
     placeholder-color: gray;
   }
-  .btn{
+  .btn {
     font-size: 18;
     font-weight: bold;
     height: 64;

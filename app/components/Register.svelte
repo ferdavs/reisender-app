@@ -1,15 +1,11 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { Api, container } from "../data/api/index";
-  import { login as fbLogin } from "nativescript-facebook-7";
-  import { SecureStorage } from "nativescript-secure-storage";
-  import { getFacebookInfo } from "../util";
-  import { navigate } from "svelte-native";
-  import App from "./App.svelte";
-  const store = new SecureStorage();
-
+  
   const api = container.getNamed<Api>("Api", "mock");
+  
   export let user = new User();
+  
   let pass1: String;
   let pass2: String;
 
