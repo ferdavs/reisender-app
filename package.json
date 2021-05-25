@@ -5,9 +5,9 @@
   "author": "Feruz Davletov",
   "version": "7.0.0",
   "main": "app.js",
-  "description": "NativeScript Application",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "repository": "<fill-your-repository-here>",
+  "description": "Reisender app",
+  "license": "LICENSE",
+  "repository": "https://github.com/ferdavs/reisender",
   "dependencies": {
     "@nativescript/core": "~7.0.0",
     "@nativescript/theme": "~2.3.3",
@@ -27,7 +27,6 @@
     "svelte-preprocess": "^4.0.8",
     "typescript": "~4.0.2"
   },
-  "gitHead": "c06800e52ee1a184ea2dffd12a6702aaa43be4e3",
   "readme": "NativeScript Application",
   "private": "true"
 }
