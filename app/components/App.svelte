@@ -8,7 +8,8 @@
   import { storeDeleteAll, storeGetSync } from "../util";
 
   const api = container.getNamed<Api>("Api", "real");
-  let user: User = JSON.parse(storeGetSync("user", new User()));
+  let val = storeGetSync("user");
+  let user: User = val == null ? new User() : JSON.parse(val);
 
   function onLogout() {
     storeDeleteAll().then((res) => {

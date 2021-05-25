@@ -14,8 +14,8 @@ export async function storePut(key, value) {
 export async function storeGet(key) {
     return storage.get({ key: key });
 }
-export function storeGetSync<T>(key, def) {
-    return storage.getSync({ key: key }) || def;
+export function storeGetSync(key) {
+    return storage.getSync({ key: key });
 }
 export async function storeDelete(key) {
     return storage.remove({ key: key });
