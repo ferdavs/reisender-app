@@ -4,38 +4,37 @@ import { User, Place } from "../models"
 
 @injectable()
 export class ApiImpl implements Api {
-    login(user: User): Promise<ApiResult> {
+    login(user: User): Promise<ApiResult<User>> {
         throw new Error("Method not implemented.");
     }
-    loginFacebook(): Promise<ApiResult> {
+    loginFacebook(): Promise<ApiResult<User>> {
         throw new Error("Method not implemented.");
     }
-    register(user: User): Promise<ApiResult> {
+    register(user: User): Promise<ApiResult<User>> {
         throw new Error("Method not implemented.");
     }
-    featureList(): Promise<ApiResult> {
+    featureList(): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    recommend(): Promise<ApiResult> {
+    recommend(): Promise<ApiResult<Place[]>> {
         throw new Error("Method not implemented.");
     }
-    wishListAdd(place: Place): Promise<ApiResult> {
+    wishListAdd(place: Place): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    wishListDelete(place: Place): Promise<ApiResult> {
+    wishListDelete(place: Place): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    visitedListAdd(place: Place): Promise<ApiResult> {
+    visitedListAdd(place: Place): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    visitedListDelete(place: Place): Promise<ApiResult> {
+    visitedListDelete(place: Place): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    placeDetail(place: Place): Promise<ApiResult> {
+    placeDetail(place: Place): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
-    search(query: String): Promise<ApiResult> {
+    search(query: String): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
 }
-

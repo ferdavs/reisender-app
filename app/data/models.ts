@@ -1,10 +1,11 @@
 export class User {
-    id: String;
-    username: String;
-    password: String;
-    fbData: Object;
-    loggedIn: Boolean;
-    firstLogin: Boolean;
+    id: string;
+    name: string;
+    username: string;
+    password: string;
+    fbData: object;
+    loggedIn: boolean;
+    firstLogin: boolean;
     wishList: Place[];
     visited: Place[];
 
@@ -18,9 +19,9 @@ export class User {
 }
 
 export class Place {
-    id: String;
-    name: String;
-    imageUrl: String;
-    wikiUrl: String;
-    description: String;
+    id: string;
+    name: string;
+    imageUrl: string;
+    wikiUrl: string;
+    description: string;
 }

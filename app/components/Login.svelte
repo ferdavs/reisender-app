@@ -15,15 +15,16 @@
     navigate({ page: Register });
   }
   function onLogin() {
-    api.login(user).then((res) => {
-      if (res.success) {
+    api
+      .login(user)
+      .then((res) => {
         user.loggedIn = res.success;
         storePut("user", JSON.stringify(user)).then((s) => {
           if (s) navigate({ page: Main, props: { user: user } });
           else console.log("error storing user");
         });
-      } else alert(res.object.message);
-    });
+      })
+      .catch((err) => alert(err.object.message));
   }
 
   function onFBLogin() {

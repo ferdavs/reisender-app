@@ -9,37 +9,37 @@ export class RealApi implements Api {
         this._api = api;
     }
 
-    login(user: User): Promise<ApiResult> {
+    login(user: User): Promise<ApiResult<User>> {
         return this._api.login(user);
     }
-    loginFacebook(): Promise<ApiResult> {
+    loginFacebook(): Promise<ApiResult<User>> {
         return this._api.loginFacebook();
     }
-    register(user: User): Promise<ApiResult> {
+    register(user: User): Promise<ApiResult<User>> {
         return this._api.register(user);
     }
-    featureList(): Promise<ApiResult> {
+    featureList(): Promise<ApiResult<any>> {
         return this._api.featureList()
     }
-    recommend(): Promise<ApiResult> {
+    recommend(): Promise<ApiResult<Place[]>> {
         return this._api.recommend();
     }
-    wishListAdd(place: Place): Promise<ApiResult> {
+    wishListAdd(place: Place): Promise<ApiResult<any>> {
         return this._api.wishListAdd(place)
     }
-    wishListDelete(place: Place): Promise<ApiResult> {
+    wishListDelete(place: Place): Promise<ApiResult<any>> {
         return this._api.wishListDelete(place);
     }
-    visitedListAdd(place: Place): Promise<ApiResult> {
+    visitedListAdd(place: Place): Promise<ApiResult<any>> {
         return this._api.visitedListAdd(place);
     }
-    visitedListDelete(place: Place): Promise<ApiResult> {
+    visitedListDelete(place: Place): Promise<ApiResult<any>> {
         return this._api.visitedListDelete(place);
     }
-    placeDetail(place: Place): Promise<ApiResult> {
+    placeDetail(place: Place): Promise<ApiResult<any>> {
         return this._api.placeDetail(place);
     }
-    search(query: String): Promise<ApiResult> {
+    search(query: String): Promise<ApiResult<any>> {
         return this._api.search(query);
     }
 }

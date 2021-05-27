@@ -8,6 +8,9 @@ import { svelteNative } from "svelte-native";
 import App from "./components/App.svelte";
 import { init } from "nativescript-facebook-7";
 import { Application } from "@nativescript/core";
+import RadListViewElement from "svelte-native-nativescript-ui/listview"
+RadListViewElement.register();
+
 Application.on(Application.launchEvent, () => {
     init("2919521278376314");
 });

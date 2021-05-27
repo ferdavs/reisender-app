@@ -1,9 +1,9 @@
 import { User, Place } from "../models"
 
-export class ApiResult {
+export class ApiResult<T> {
     httpStatus: number;
     _json: string;
-    object: any;
+    object: T;
     success: boolean;
     constructor(httpStatus = 200, json = "{}") {
         this.httpStatus = httpStatus;
@@ -34,15 +34,15 @@ export class ApiResult {
 // GET    /api/place/recommend (place array)
 // GET    /api/search?query=
 export interface Api {
-    login(user: User): Promise<ApiResult>;
-    loginFacebook(): Promise<ApiResult>;
-    register(user: User): Promise<ApiResult>;
-    featureList(): Promise<ApiResult>;
-    recommend(): Promise<ApiResult>;
-    wishListAdd(place: Place): Promise<ApiResult>;
-    wishListDelete(place: Place): Promise<ApiResult>;
-    visitedListAdd(place: Place): Promise<ApiResult>;
-    visitedListDelete(place: Place): Promise<ApiResult>;
-    placeDetail(place: Place): Promise<ApiResult>;
-    search(query: String): Promise<ApiResult>;
+    login(user: User): Promise<ApiResult<User>>;
+    loginFacebook(): Promise<ApiResult<User>>;
+    register(user: User): Promise<ApiResult<User>>;
+    featureList(): Promise<ApiResult<any>>;
+    recommend(): Promise<ApiResult<Place[]>>;
+    wishListAdd(place: Place): Promise<ApiResult<any>>;
+    wishListDelete(place: Place): Promise<ApiResult<any>>;
+    visitedListAdd(place: Place): Promise<ApiResult<any>>;
+    visitedListDelete(place: Place): Promise<ApiResult<any>>;
+    placeDetail(place: Place): Promise<ApiResult<Place>>;
+    search(query: String): Promise<ApiResult<Place[]>>;
 }

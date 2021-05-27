@@ -7,7 +7,9 @@ export async function getFacebookInfo(token) {
         "https://graph.facebook.com/me?fields=id,name,email&access_token=" + token
     );
 }
-
+export function isNull(val) {
+    return val === null || val === undefined;
+}
 export async function storePut(key, value) {
     return storage.set({ key: key, value: value });
 }
@@ -23,4 +25,3 @@ export async function storeDelete(key) {
 export async function storeDeleteAll() {
     return storage.removeAll();
 }
-
