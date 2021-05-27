@@ -5,7 +5,10 @@ import { User, Place } from "../models"
 @injectable()
 export class MockApi implements Api {
     login(user: User): Promise<ApiResult> {
-        return Promise.resolve(new ApiResult());
+        if (Math.random() < 0.1) {
+            return Promise.resolve(new ApiResult(404, '{"message":"not found"}'));
+        }
+        return Promise.resolve(new ApiResult(200, "{}"));
     }
     loginFacebook(): Promise<ApiResult> {
         return Promise.resolve(new ApiResult());

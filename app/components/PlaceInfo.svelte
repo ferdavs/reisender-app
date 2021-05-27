@@ -6,11 +6,12 @@
 
 <page>
   <actionBar flat="true">
+    <!-- svelte-ignore a11y-label-has-associated-control -->
     <label bind:text={place.name} fontSize="24" horizontalAlignment="center" />
   </actionBar>
   <gridLayout columns="*, *" rows="2*, 3*, 1*">
     <image
-      src="https://upload.wikimedia.org/wikipedia/commons/2/22/Sun_Pyramid_05_2015_Teotihuacan_3304.JPG"
+      src={place.imageUrl}
       stretch="aspectFill"
       row="0"
       col="0"

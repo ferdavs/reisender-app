@@ -4,7 +4,7 @@ export class User {
     password: String;
     fbData: Object;
     loggedIn: Boolean;
-
+    firstLogin: Boolean;
     wishList: Place[];
     visited: Place[];
 
@@ -13,6 +13,7 @@ export class User {
         this.username = username;
         this.password = password;
         this.loggedIn = false;
+        this.firstLogin = true;
     }
 }
 

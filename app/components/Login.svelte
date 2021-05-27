@@ -1,11 +1,12 @@
 <script lang="ts">
   import { User } from "../data/models";
-  import { Api, container } from "../data/api/index";
+  import { Api, container } from "../data/api";
   import { login as fbLogin } from "nativescript-facebook-7";
   import { getFacebookInfo, storePut, storeDeleteAll } from "../util";
   import { navigate } from "svelte-native";
-  import App from "./App.svelte";
   import Register from "./Register.svelte";
+  import Main from "./Main.svelte";
+  import ActionBar from "./ActionBar.svelte";
 
   const api = container.getNamed<Api>("Api", "mock");
   export let user = new User();
@@ -13,7 +14,17 @@
   function onRegister() {
     navigate({ page: Register });
   }
-  function onLogin() {}
+  function onLogin() {
+    api.login(user).then((res) => {
+      if (res.success) {
+        user.loggedIn = res.success;
+        storePut("user", JSON.stringify(user)).then((s) => {
+          if (s) navigate({ page: Main, props: { user: user } });
+          else console.log("error storing user");
+        });
+      } else alert(res.object.message);
+    });
+  }
 
   function onFBLogin() {
     fbLogin((err, fbData) => {
@@ -31,7 +42,7 @@
           storePut("user", JSON.stringify(user))
             .then((result) => {
               console.log("user store " + result);
-              if (result) navigate({ page: App });
+              if (result) navigate({ page: Main, props: { user: user } });
             })
             .catch((error) => console.log("error user store : " + error));
         });
@@ -40,10 +51,9 @@
   }
 </script>
 
-<page>
-  <actionBar flat="true">
-    <label text="Reisender" fontSize="24" horizontalAlignment="center" />
-  </actionBar>
+<page actionBarHidden="false">
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <ActionBar title={"Reisender"} />
 
   <stackLayout>
     <textField

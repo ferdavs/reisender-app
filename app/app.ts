@@ -5,12 +5,11 @@ purpose of the file is to pass control to the app’s first module.
 */
 
 import { svelteNative } from "svelte-native";
-import App from  "./components/App.svelte";
+import App from "./components/App.svelte";
 import { init } from "nativescript-facebook-7";
 import { Application } from "@nativescript/core";
-Application.on(Application.launchEvent, function (args) {
+Application.on(Application.launchEvent, () => {
     init("2919521278376314");
 });
 
 svelteNative(App, {});
-

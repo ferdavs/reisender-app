@@ -2,10 +2,23 @@ import { User, Place } from "../models"
 
 export class ApiResult {
     httpStatus: number;
-    json: String;
+    _json: string;
     object: any;
     success: boolean;
+    constructor(httpStatus = 200, json = "{}") {
+        this.httpStatus = httpStatus;
+        this.json = json;
+        this.success = 300 > httpStatus && httpStatus >= 200;
+    }
+    set json(val: string) {
+        this._json = val;
+        this.object = val === null || val === undefined ? {} : JSON.parse(val);
+    }
+    get json(): string {
+        return this._json;
+    }
 }
+
 // POST   /api/user/login (user obejct)
 // POST   /api/user/register (user obejct)
 // POST   /api/user/feature_list (onbaording feature list)
@@ -30,6 +43,6 @@ export interface Api {
     wishListDelete(place: Place): Promise<ApiResult>;
     visitedListAdd(place: Place): Promise<ApiResult>;
     visitedListDelete(place: Place): Promise<ApiResult>;
-    placeDetail(place:Place): Promise<ApiResult>;
+    placeDetail(place: Place): Promise<ApiResult>;
     search(query: String): Promise<ApiResult>;
 }

@@ -5,6 +5,7 @@
 
 <page>
   <actionBar flat="true">
+    <!-- svelte-ignore a11y-label-has-associated-control -->
     <label
       bind:text={user.name}
       fontSize="24"

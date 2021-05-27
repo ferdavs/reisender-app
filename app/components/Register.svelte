@@ -16,10 +16,14 @@
     return pass1 === pass2;
   }
   function onRegister() {
-    if (checkPass(pass1, pass2)) api.register(user).then((res) => {console.log(res)});
+    if (checkPass(pass1, pass2))
+      api.register(user).then((res) => {
+        console.log(res);
+      });
   }
 </script>
 
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <page>
   <actionBar flat="true">
     <label text="Reisender" fontSize="24" horizontalAlignment="center" />
@@ -66,15 +70,5 @@
     font-size: 18;
     font-weight: bold;
     height: 64;
-  }
-  .fb-login-button {
-    background: #3b5998;
-    color: white;
-  }
-  .link {
-    border-color: transparent;
-    border-width: 1;
-    z-index: 0;
-    text-align: right;
   }
 </style>

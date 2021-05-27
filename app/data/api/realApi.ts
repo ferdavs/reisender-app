@@ -42,5 +42,4 @@ export class RealApi implements Api {
     search(query: String): Promise<ApiResult> {
         return this._api.search(query);
     }
-
 }
