@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { navigate } from "svelte-native";
+  import { navigate, goBack } from "svelte-native";
   import { isNull, storeDeleteAll } from "~/util";
   import { User, Place } from "../data/models";
+  import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
   import PlaceInfo from "./PlaceInfo.svelte";
   export let user: User;
@@ -18,22 +19,19 @@
     });
   }
 
-  function onPlace() {
-    let place: Place = new Place();
-    place.name = "Pyramid of the Sun";
-    place.imageUrl =
-      "https://upload.wikimedia.org/wikipedia/commons/2/22/Sun_Pyramid_05_2015_Teotihuacan_3304.JPG";
-    navigate({ page: PlaceInfo, props: { place: place } });
-  }
+  function onDelete() {}
 </script>
 
 <page>
-  <actionBar flat="true">
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label bind:text={title} fontSize="24" horizontalAlignment="center" />
-  </actionBar>
+  <ActionBar
+    {title}
+    action={goBack}
+    fontClass="fas"
+    fontIcon="font://&#xf053;"
+  />
   <stackLayout>
     <textView editable="false" bind:text={user.username} />
     <button text="Log out" on:tap={onLogout} />
+    <button text="Delete Account" on:tap={onDelete} />
   </stackLayout>
 </page>

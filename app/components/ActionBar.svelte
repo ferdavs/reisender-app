@@ -1,6 +1,8 @@
 <script lang="ts">
   export let title: String = "<title>";
   export let action: Function;
+  export let fontClass = "fas";
+  export let fontIcon = "font://&#xf2bd;";
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -9,10 +11,9 @@
   {#if action}
     <actionItem
       on:tap={action}
-      ios.systemIcon="8"
       ios.position="right"
-      class="fas"
-      icon="font://&#xf2bd;"
+      class={fontClass}
+      icon={fontIcon}
       android.position="actionBar"
     />
   {/if}

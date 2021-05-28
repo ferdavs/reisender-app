@@ -41,7 +41,12 @@
 </script>
 
 <page>
-  <ActionBar title={"Reisender"} action={onAccount} />
+  <ActionBar
+    title={"Reisender"}
+    action={onAccount}
+    fontClass="fas"
+    fontIcon="font://&#xf406;"
+  />
 
   <radListView
     items={places}

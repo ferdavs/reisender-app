@@ -1,15 +1,20 @@
 <script lang="ts">
+  import { goBack } from "svelte-native";
   import { Place, User } from "~/data/models";
+  import ActionBar from "./ActionBar.svelte";
 
   export let place: Place = new Place();
   // export let user: User;
 </script>
 
 <page>
-  <actionBar flat="true">
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label bind:text={place.name} fontSize="24" horizontalAlignment="center" />
-  </actionBar>
+  <ActionBar
+    title={place.name}
+    action={goBack}
+    fontClass="fas"
+    fontIcon="font://&#xf053;"
+  />
+
   <gridLayout columns="*, *" rows="3*, 6*, 2*">
     <imgCache
       src={place.imageUrl}
