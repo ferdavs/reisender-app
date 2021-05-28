@@ -4,6 +4,7 @@ import { User, Place } from "../models"
 
 @injectable()
 export class MockApi implements Api {
+
     login(user: User): Promise<ApiResult<User>> {
         if (Math.random() < 0.1) {
             return Promise.reject(new ApiResult(404, '{"message":"not found"}'));
@@ -21,18 +22,22 @@ export class MockApi implements Api {
         result.object = user;
         return Promise.resolve(result);
     }
-    featureList(): Promise<ApiResult<any>> {
+    getFeatures(): Promise<ApiResult<any>> {
+        return Promise.resolve(new ApiResult());
+    }
+    sendFeatures(values: string[]): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
     recommend(): Promise<ApiResult<Place[]>> {
         let res = new ApiResult<Place[]>(200, "{}");
         let places: Place[] = [];
-        for (let i = 0; i < 8; i++) {
-            let place =new Place();
+        for (let i = 0; i < 10; i++) {
+            let place = new Place();
             place.id = i.toString();
-            place.imageUrl = "~/images/place_holder.png";
+            // place.imageUrl = "~/images/place_holder.png";
+            place.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/2/22/Sun_Pyramid_05_2015_Teotihuacan_3304.JPG";
             place.name = 'name' + i;
-            place.description = "description"
+            place.description = "description of " + place.name;
             places.push(place);
         }
         res.object = places;

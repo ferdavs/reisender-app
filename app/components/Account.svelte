@@ -35,6 +35,5 @@
   <stackLayout>
     <textView editable="false" bind:text={user.username} />
     <button text="Log out" on:tap={onLogout} />
-    <button text="Place" on:tap={onPlace} />
   </stackLayout>
 </page>

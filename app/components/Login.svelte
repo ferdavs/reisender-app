@@ -52,33 +52,33 @@
   }
 </script>
 
-<page actionBarHidden="false">
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <ActionBar title={"Reisender"} />
+  <page actionBarHidden="false">
+    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <ActionBar title={"Reisender"} />
 
-  <stackLayout>
-    <textField
-      bind:text={user.username}
-      hint="Username..."
-      keyboardType="email"
-      class="text"
-    />
-    <textField
-      bind:text={user.password}
-      hint="Password..."
-      secure="true"
-      class="text"
-    />
-    <button text="Register" class="link" on:tap={onRegister} />
+    <stackLayout>
+      <textField
+        bind:text={user.username}
+        hint="Username..."
+        keyboardType="email"
+        class="text"
+      />
+      <textField
+        bind:text={user.password}
+        hint="Password..."
+        secure="true"
+        class="text"
+      />
+      <button text="Register" class="link" on:tap={onRegister} />
 
-    <button text="Login" on:tap={onLogin} class="btn" />
-    <button
-      text="Facebook Login"
-      on:tap={onFBLogin}
-      class="fb-login-button btn"
-    />
-  </stackLayout>
-</page>
+      <button text="Login" on:tap={onLogin} class="btn" />
+      <button
+        text="Facebook Login"
+        on:tap={onFBLogin}
+        class="fb-login-button btn"
+      />
+    </stackLayout>
+  </page>
 
 <style>
   .text {

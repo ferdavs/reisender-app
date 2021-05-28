@@ -6,8 +6,8 @@ export class User {
     fbData: object;
     loggedIn: boolean;
     firstLogin: boolean;
-    wishList: Place[];
-    visited: Place[];
+    wishList: Set<Place>;
+    visited: Set<Place>;
 
     constructor(id = '0', username = '', password = '') {
         this.id = id;
@@ -24,4 +24,5 @@ export class Place {
     imageUrl: string;
     wikiUrl: string;
     description: string;
+    info: string;
 }

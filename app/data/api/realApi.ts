@@ -18,8 +18,11 @@ export class RealApi implements Api {
     register(user: User): Promise<ApiResult<User>> {
         return this._api.register(user);
     }
-    featureList(): Promise<ApiResult<any>> {
-        return this._api.featureList()
+    getFeatures(): Promise<ApiResult<any>> {
+        return this._api.getFeatures();
+    }
+    sendFeatures(values: string[]): Promise<ApiResult<any>> {
+        return this._api.sendFeatures(values);
     }
     recommend(): Promise<ApiResult<Place[]>> {
         return this._api.recommend();

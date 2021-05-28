@@ -5,12 +5,13 @@
   import { Api, container } from "~/data/api";
   import Card from "./Card.svelte";
   import {
-ListViewEventData,
     ListViewLoadOnDemandMode,
     ListViewViewType,
   } from "nativescript-ui-listview";
   import { Template } from "svelte-native/components";
   import { ObservableArray } from "@nativescript/core";
+  import PlaceInfo from "./PlaceInfo.svelte";
+  import ActionBar from "./ActionBar.svelte";
 
   const api: Api = container.getNamed("Api", "mock");
 
@@ -31,22 +32,16 @@ ListViewEventData,
     object.notifyPullToRefreshFinished();
   }
   function onItemTap({ index }) {
-    alert(`Item tapped: ${places.getItem(index).name}`);
+    // alert(`Item tapped: ${places.getItem(index).name}`);
+    navigate({
+      page: PlaceInfo,
+      props: { place: places.getItem(index), user: user },
+    });
   }
 </script>
 
 <page>
-  <actionBar flat="true">
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label text={"Reisender"} fontSize="24" horizontalAlignment="center" />
-    <actionItem
-      on:tap={onAccount}
-      ios.systemIcon="8"
-      ios.position="right"
-      android.systemIcon="ic_menu_myplaces"
-      android.position="actionBar"
-    />
-  </actionBar>
+  <ActionBar title={"Reisender"} action={onAccount} />
 
   <radListView
     items={places}
@@ -60,15 +55,14 @@ ListViewEventData,
       <listViewGridLayout />
     </radListView.listViewLayout>
 
-    <Template type={ListViewViewType.ItemView} key="even" let:item>
+    <Template type={ListViewViewType.ItemView} let:item>
       {#if item !== undefined}
-        <Card imageUrl={item.imageUrl} name={item.name} />
-      {/if}
-    </Template>
-
-    <Template type={ListViewViewType.ItemView} key="odd" let:item>
-      {#if item !== undefined}
-        <Card imageUrl={item.imageUrl} name={item.name} />
+        <Card
+          imageUrl={item.imageUrl}
+          name={item.name}
+          height="150"
+          width="180"
+        />
       {/if}
     </Template>
   </radListView>

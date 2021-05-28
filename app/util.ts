@@ -2,7 +2,7 @@ import { Http } from "@nativescript/core";
 import { SecureStorage } from "nativescript-secure-storage"
 const storage = new SecureStorage()
 
-export async function getFacebookInfo(token) {
+export async function getFacebookInfo(token:string) {
     return await Http.getJSON(
         "https://graph.facebook.com/me?fields=id,name,email&access_token=" + token
     );

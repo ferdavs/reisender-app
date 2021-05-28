@@ -13,7 +13,10 @@ export class ApiImpl implements Api {
     register(user: User): Promise<ApiResult<User>> {
         throw new Error("Method not implemented.");
     }
-    featureList(): Promise<ApiResult<any>> {
+    getFeatures(): Promise<ApiResult<any>> {
+        throw new Error("Method not implemented.");
+    }
+    sendFeatures(values:string[]): Promise<ApiResult<any>> {
         throw new Error("Method not implemented.");
     }
     recommend(): Promise<ApiResult<Place[]>> {

@@ -37,7 +37,8 @@ export interface Api {
     login(user: User): Promise<ApiResult<User>>;
     loginFacebook(): Promise<ApiResult<User>>;
     register(user: User): Promise<ApiResult<User>>;
-    featureList(): Promise<ApiResult<any>>;
+    getFeatures(): Promise<ApiResult<any>>;
+    sendFeatures(values:string[]): Promise<ApiResult<any>>;
     recommend(): Promise<ApiResult<Place[]>>;
     wishListAdd(place: Place): Promise<ApiResult<any>>;
     wishListDelete(place: Place): Promise<ApiResult<any>>;
