@@ -16,7 +16,9 @@
 
   export let user: User = null;
   const api = namedApi("mock");
-  let features = new ObservableArray<Feature>();
+  const title = "Choose at least 5";
+  const features = new ObservableArray<Feature>();
+
   api
     .getFeatures()
     .then((res) => {
@@ -48,7 +50,7 @@
 
 <page>
   <ActionBar
-    title={"Choose at least 5"}
+    {title}
     action={onDone}
     fontClass="fas"
     fontIcon="font://&#xf00c;"

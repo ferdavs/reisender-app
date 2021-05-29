@@ -15,26 +15,32 @@
     {height}
     {width}
     src={imageUrl}
+    roundedCornerRadius="12"
+    roundBottomRight="true"
+    roundBottomLeft="true"
+    roundTopLeft="true"
+    roundTopRight="true"
     stretch="aspectFill"
   />
   {#if name}
     <label top="15" left="15" text={name} class="label" />
   {/if}
   {#if selected}
-  <label top="{to_number(height) / 2-24}" left="{to_number(width) / 2-24}">
-    <formattedString>
-      <span text="&#xf00c;" class="fas check" />
-    </formattedString>
-  </label>
-{/if}
+    <label top={to_number(height) / 2 - 24} left={to_number(width) / 2 - 24}>
+      <formattedString>
+        <span text="&#xf00c;" class="fas check" />
+      </formattedString>
+    </label>
+  {/if}
 </absoluteLayout>
 
 <style>
   .image {
     margin: 8;
-    border-radius: 5;
+    padding: 0;
     border-width: 1;
-    border-color: rgba(187, 187, 187, 0.356);
+    border-radius: 8;
+    border-color: rgba(177, 177, 177, 0.333);
   }
   .label {
     background: rgba(92, 92, 92, 0.349);

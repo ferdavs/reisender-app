@@ -23,6 +23,11 @@
       col="0"
       widith="75%"
       class="border-props"
+      roundedCornerRadius="12"
+      roundBottomRight="true"
+      roundBottomLeft="true"
+      roundTopLeft="true"
+      roundTopRight="true"
     />
     <htmlView
       editable="false"
@@ -58,7 +63,7 @@
   .border-props {
     border-width: 1;
     border-color: rgba(187, 187, 187, 0.356);
-    border-radius: 3;
+    border-radius: 5;
     margin: 8;
   }
 </style>
