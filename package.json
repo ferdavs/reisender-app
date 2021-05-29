@@ -11,7 +11,7 @@
   "dependencies": {
     "@nativescript-community/ui-image": "^4.0.23",
     "@nativescript/core": "~7.0.0",
-    "@nativescript/theme": "~2.3.3",
+    "@nativescript/theme": "^2.3.4",
     "@nativescript/webpack": "3.0.0",
     "@plmservices/nativescript-sha": "^2.0.2",
     "inversify": "^5.1.1",

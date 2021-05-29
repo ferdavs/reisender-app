@@ -1,10 +1,34 @@
 <script lang="ts">
+  import { ObservableArray } from "@nativescript/core";
   import { goBack } from "svelte-native";
-  import { Place, User } from "~/data/models";
+  import { Place } from "~/data/models";
   import ActionBar from "./ActionBar.svelte";
 
   export let place: Place = new Place();
-  export let user: User = null;
+
+  export let visited = new ObservableArray<Place>();
+  export let wishlist = new ObservableArray<Place>();
+
+  let inVisited = visited.filter((value) => value.id == place.id).length > 0;
+  let inWishlist = wishlist.filter((value) => value.id == place.id).length > 0;
+
+  function addWishlist() {
+    wishlist.push(place);
+    inWishlist = true;
+  }
+  function deleteWishlist() {
+    wishlist.splice(wishlist.indexOf(place), 1);
+    inWishlist = false;
+  }
+
+  function addVisited() {
+    visited.push(place);
+    inVisited = true;
+  }
+  function deleteVisited() {
+    visited.splice(visited.indexOf(place), 1);
+    inVisited = false;
+  }
 </script>
 
 <page>
@@ -44,16 +68,37 @@
       colSpan="2"
       class="border-props"
     />
-    <button row="2" col="0">
+    <button
+      row="2"
+      col="0"
+      class="btn"
+      on:tap={inWishlist ? deleteWishlist : addWishlist}
+    >
       <formattedString>
-        <span text="&#xf067;" class="fas" />
-        <span text=" Add to Wishlist" />
+        {#if !inWishlist}
+          <span text="&#xf067;" class="fas" />
+          <span text=" Add to Wishlist" />
+        {:else}
+          <span text="&#xf00d;" class="fas" />
+          <span text=" Remove from Wishlist" />
+        {/if}
       </formattedString>
     </button>
-    <button row="2" col="1">
+
+    <button
+      row="2"
+      col="1"
+      class="btn"
+      on:tap={inVisited ? deleteVisited : addVisited}
+    >
       <formattedString>
-        <span text="&#xf00c;" class="fas" />
-        <span text=" Add to Visited" />
+        {#if !inVisited}
+          <span text="&#xf00c;" class="fas" />
+          <span text=" Add to Visited" />
+        {:else}
+          <span text="&#xf00d;" class="fas" />
+          <span text=" Remove from Visited" />
+        {/if}
       </formattedString>
     </button>
   </gridLayout>
@@ -65,5 +110,10 @@
     border-color: rgba(187, 187, 187, 0.356);
     border-radius: 5;
     margin: 8;
+  }
+  .btn {
+    font-weight: bold;
+    font-size: 18;
+    height: 64;
   }
 </style>

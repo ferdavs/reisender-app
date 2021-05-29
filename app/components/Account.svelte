@@ -1,13 +1,19 @@
 <script lang="ts">
+  import { ObservableArray } from "@nativescript/core";
   import { navigate, goBack } from "svelte-native";
-  import { isNull, storeDeleteAll } from "~/util";
+  import { isNull, storeDeleteAll, storeGetSync, storePut } from "~/util";
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
-  export let user: User;
-  let title = "";
-  $: title = !isNull(user.name) ? user.name : user.username;
+  import PlaceInfo from "./PlaceInfo.svelte";
+  import PlaceList from "./PlaceList.svelte";
 
+  export let user: User;
+  export let visited = new ObservableArray<Place>();
+  export let wishlist = new ObservableArray<Place>();
+
+  let title = "";
+  $: title = isNull(user.name) ? user.username : user.name;
   function onLogout() {
     storeDeleteAll().then((res) => {
       if (res)
@@ -19,6 +25,27 @@
   }
 
   function onDelete() {}
+
+  function onVisitedItemTap({ index }) {
+    navigate({
+      page: PlaceInfo,
+      props: {
+        place: visited.getItem(index),
+        visited: visited,
+        wishlist: wishlist,
+      },
+    });
+  }
+  function onWishlistItemTap({ index }) {
+    navigate({
+      page: PlaceInfo,
+      props: {
+        place: wishlist.getItem(index),
+        visited: visited,
+        wishlist: wishlist,
+      },
+    });
+  }
 </script>
 
 <page>
@@ -29,8 +56,26 @@
     fontIcon="font://&#xf053;"
   />
   <stackLayout>
-    <textView editable="false" bind:text={user.username} />
-    <button text="Log out" on:tap={onLogout} />
-    <button text="Delete Account" on:tap={onDelete} />
+    <PlaceList
+      text="Wishlist"
+      bind:list={wishlist}
+      onItemTap={onWishlistItemTap}
+    />
+    <!-- <stackLayout class="hr m-10" /> -->
+    <PlaceList
+      text="Visited"
+      bind:list={visited}
+      onItemTap={onVisitedItemTap}
+    />
+    <button text="Log out" on:tap={onLogout} class="btn" />
+    <button text="Delete Account" on:tap={onDelete} class="btn" />
   </stackLayout>
 </page>
+
+<style>
+  .btn {
+    font-size: 18;
+    font-weight: bold;
+    height: 64;
+  }
+</style>

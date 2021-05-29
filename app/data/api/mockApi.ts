@@ -16,7 +16,6 @@ export class MockApi implements Api {
     }
     loginFacebook(): Promise<ApiResult<User>> {
         return Promise.resolve(new ApiResult());
-
     }
     register(user: User): Promise<ApiResult<User>> {
         let result = new ApiResult<User>();
@@ -44,7 +43,7 @@ export class MockApi implements Api {
     recommend(): Promise<ApiResult<Place[]>> {
         let res = new ApiResult<Place[]>(200, "{}");
         let places: Place[] = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 8; i++) {
             let place = new Place();
             place.id = Math.round(Math.random() * 1000).toString();
             place.imageUrl = this.mockImage(place.id);

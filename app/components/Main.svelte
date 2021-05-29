@@ -12,21 +12,26 @@
   import { ObservableArray } from "@nativescript/core";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
+  import { storeGetSync, storePut } from "~/util";
 
   const api = namedApi("mock");
 
   export let user: User = new User();
   const places = new ObservableArray<Place>();
+  let visited = new ObservableArray<Place>();
+  let wishlist = new ObservableArray<Place>();
+
   api.recommend(user).then((res) => {
     places.push(res.object);
   });
 
   function onAccount() {
-    navigate({ page: Account, props: { user: user } });
+    navigate({
+      page: Account,
+      props: { user: user, visited: visited, wishlist: wishlist },
+    });
   }
-  function selectTemplate(item, index, items) {
-    return index % 2 == 0 ? "even" : "odd";
-  }
+
   function onPullToRefreshInitiated({ object }) {
     api.recommend(user).then((res) => {
       places.splice(0);
@@ -35,12 +40,25 @@
     });
   }
   function onItemTap({ index }) {
-    // alert(`Item tapped: ${places.getItem(index).name}`);
     navigate({
       page: PlaceInfo,
-      props: { place: places.getItem(index), user: user },
+      props: {
+        place: places.getItem(index),
+        visited: visited,
+        wishlist: wishlist,
+      },
     });
   }
+  visited.push(JSON.parse(storeGetSync("visited", "[]")));
+  wishlist.push(JSON.parse(storeGetSync("wishlist", "[]")));
+
+  visited.on(ObservableArray.changeEvent, (event) => {
+    storePut("visited", JSON.stringify(visited.map<Place>((value) => value)));
+  });
+
+  wishlist.on(ObservableArray.changeEvent, (event) => {
+    storePut("wishlist", JSON.stringify(wishlist.map<Place>((value) => value)));
+  });
 </script>
 
 <page>
@@ -55,7 +73,6 @@
     items={places}
     loadOnDemandMode={ListViewLoadOnDemandMode.None}
     pullToRefresh="true"
-    itemTemplateSelector={selectTemplate}
     on:pullToRefreshInitiated={onPullToRefreshInitiated}
     on:itemTap={onItemTap}
   >

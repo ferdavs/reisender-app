@@ -6,7 +6,7 @@ export class User {
     fbData: object;
     loggedIn: boolean;
     firstLogin: boolean;
-    wishList: Place[];
+    wishlist: Place[];
     visited: Place[];
     features: Feature[];
 
@@ -18,7 +18,7 @@ export class User {
         this.firstLogin = true;
         this.features = [];
         this.visited = [];
-        this.wishList = [];
+        this.wishlist = [];
     }
 }
 
