@@ -1,13 +1,14 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { Api, container } from "../data/api/index";
-  
+  import { sha } from "~/util";
+
   const api = container.getNamed<Api>("Api", "mock");
-  
+
   export let user = new User();
-  
-  let pass1: String;
-  let pass2: String;
+
+  let pass1: string;
+  let pass2: string;
 
   $: if (checkPass(pass1, pass2)) {
     user.password = pass2;
@@ -16,10 +17,13 @@
     return pass1 === pass2;
   }
   function onRegister() {
-    if (checkPass(pass1, pass2))
+    if (checkPass(pass1, pass2)) {
+      user.password = sha.Sha256(user.password);
+
       api.register(user).then((res) => {
         console.log(res);
       });
+    } else alert("Passwords must match!");
   }
 </script>
 

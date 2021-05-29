@@ -1,8 +1,11 @@
 import { Http } from "@nativescript/core";
 import { SecureStorage } from "nativescript-secure-storage"
+import { Sha } from "@plmservices/nativescript-sha";
+
+export const sha = new Sha();
 const storage = new SecureStorage()
 
-export async function getFacebookInfo(token:string) {
+export async function getFacebookInfo(token: string) {
     return await Http.getJSON(
         "https://graph.facebook.com/me?fields=id,name,email&access_token=" + token
     );

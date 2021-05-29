@@ -1,6 +1,6 @@
 <script lang="ts">
   export let title: String = "<title>";
-  export let action: Function;
+  export let action: Function = null;
   export let fontClass = "fas";
   export let fontIcon = "font://&#xf2bd;";
 </script>

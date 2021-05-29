@@ -2,7 +2,7 @@
   import { User } from "../data/models";
   import { Api, container } from "../data/api";
   import { login as fbLogin } from "nativescript-facebook-7";
-  import { getFacebookInfo, storePut, storeDeleteAll } from "../util";
+  import { getFacebookInfo, storePut, sha } from "../util";
   import { navigate } from "svelte-native";
   import Register from "./Register.svelte";
   import Main from "./Main.svelte";
@@ -10,11 +10,13 @@
 
   const api = container.getNamed<Api>("Api", "mock");
   export let user = new User();
+  let password: string;
 
   function onRegister() {
     navigate({ page: Register });
   }
   function onLogin() {
+    user.password = sha.Sha256(password);
     api
       .login(user)
       .then((res) => {
@@ -52,33 +54,33 @@
   }
 </script>
 
-  <page actionBarHidden="false">
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <ActionBar title={"Reisender"} />
+<page actionBarHidden="false">
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <ActionBar title={"Reisender"} />
 
-    <stackLayout>
-      <textField
-        bind:text={user.username}
-        hint="Username..."
-        keyboardType="email"
-        class="text"
-      />
-      <textField
-        bind:text={user.password}
-        hint="Password..."
-        secure="true"
-        class="text"
-      />
-      <button text="Register" class="link" on:tap={onRegister} />
+  <stackLayout>
+    <textField
+      bind:text={user.username}
+      hint="Username..."
+      keyboardType="email"
+      class="text"
+    />
+    <textField
+      bind:text={password}
+      hint="Password..."
+      secure="true"
+      class="text"
+    />
+    <button text="Register" class="link" on:tap={onRegister} />
 
-      <button text="Login" on:tap={onLogin} class="btn" />
-      <button
-        text="Facebook Login"
-        on:tap={onFBLogin}
-        class="fb-login-button btn"
-      />
-    </stackLayout>
-  </page>
+    <button text="Login" on:tap={onLogin} class="btn" />
+    <button
+      text="Facebook Login"
+      on:tap={onFBLogin}
+      class="fb-login-button btn"
+    />
+  </stackLayout>
+</page>
 
 <style>
   .text {
