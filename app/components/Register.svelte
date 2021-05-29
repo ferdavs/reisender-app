@@ -1,7 +1,9 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { Api, container } from "../data/api/index";
-  import { sha } from "~/util";
+  import { sha, storePut } from "~/util";
+  import { navigate } from "svelte-native";
+  import Main from "./Main.svelte";
 
   const api = container.getNamed<Api>("Api", "mock");
 
@@ -10,19 +12,22 @@
   let pass1: string;
   let pass2: string;
 
-  $: if (checkPass(pass1, pass2)) {
-    user.password = pass2;
-  }
   function checkPass(pass1, pass2) {
     return pass1 === pass2;
   }
   function onRegister() {
     if (checkPass(pass1, pass2)) {
-      user.password = sha.Sha256(user.password);
-
-      api.register(user).then((res) => {
-        console.log(res);
-      });
+      user.password = sha.Sha256(pass2);
+      api
+        .register(user)
+        .then((res) => {
+          storePut("user", JSON.stringify(user))
+            .then((result) => {
+              if (result) navigate({ page: Main, props: { user: user } });
+            })
+            .catch((error) => console.log("error user store : " + error));
+        })
+        .catch((err) => alert("Error: " + err.object.message));
     } else alert("Passwords must match!");
   }
 </script>

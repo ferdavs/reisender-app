@@ -42,12 +42,17 @@
           user.username = res.email;
           user.name = res.name;
           user.loggedIn = true;
-          storePut("user", JSON.stringify(user))
-            .then((result) => {
-              console.log("user store " + result);
-              if (result) navigate({ page: Main, props: { user: user } });
+          api
+            .register(user)
+            .then((res) => {
+              storePut("user", JSON.stringify(user))
+                .then((result) => {
+                  console.log("user store " + result);
+                  if (result) navigate({ page: Main, props: { user: user } });
+                })
+                .catch((error) => console.log("error user store : " + error));
             })
-            .catch((error) => console.log("error user store : " + error));
+            .catch((er) => console.log(er));
         });
       }
     });

@@ -10,19 +10,19 @@ export async function getFacebookInfo(token: string) {
         "https://graph.facebook.com/me?fields=id,name,email&access_token=" + token
     );
 }
-export function isNull(val) {
+export function isNull(val:any) {
     return val === null || val === undefined;
 }
-export async function storePut(key, value) {
+export async function storePut(key:string, value:string) {
     return storage.set({ key: key, value: value });
 }
-export async function storeGet(key) {
+export async function storeGet(key:string) {
     return storage.get({ key: key });
 }
-export function storeGetSync(key) {
+export function storeGetSync(key:string) {
     return storage.getSync({ key: key });
 }
-export async function storeDelete(key) {
+export async function storeDelete(key:string) {
     return storage.remove({ key: key });
 }
 export async function storeDeleteAll() {
