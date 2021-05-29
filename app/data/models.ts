@@ -6,8 +6,9 @@ export class User {
     fbData: object;
     loggedIn: boolean;
     firstLogin: boolean;
-    wishList: Set<Place>;
-    visited: Set<Place>;
+    wishList: Place[];
+    visited: Place[];
+    features: Feature[];
 
     constructor(id = '0', username = '', password = '') {
         this.id = id;
@@ -15,6 +16,9 @@ export class User {
         this.password = password;
         this.loggedIn = false;
         this.firstLogin = true;
+        this.features = [];
+        this.visited = [];
+        this.wishList = [];
     }
 }
 
@@ -25,4 +29,19 @@ export class Place {
     wikiUrl: string;
     description: string;
     info: string;
+}
+
+export class Feature {
+    id: string;
+    name: string;
+    imageUrl: string;
+    private _selected: boolean = false;
+
+    toggle() {
+        this._selected = !this._selected;
+        return this._selected;
+    }
+    get selected() {
+        return this._selected;
+    }
 }

@@ -4,7 +4,7 @@
   import ActionBar from "./ActionBar.svelte";
 
   export let place: Place = new Place();
-  // export let user: User;
+  export let user: User = null;
 </script>
 
 <page>

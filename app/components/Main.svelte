@@ -2,7 +2,7 @@
   import { User, Place } from "../data/models";
   import { navigate } from "svelte-native";
   import Account from "./Account.svelte";
-  import { Api, container } from "~/data/api";
+  import { namedApi } from "~/data/api";
   import Card from "./Card.svelte";
   import {
     ListViewLoadOnDemandMode,
@@ -13,11 +13,11 @@
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
 
-  const api: Api = container.getNamed("Api", "mock");
+  const api = namedApi("mock");
 
   export let user: User = new User();
-  let places = new ObservableArray<Place>();
-  api.recommend().then((res) => {
+  const places = new ObservableArray<Place>();
+  api.recommend(user).then((res) => {
     places.push(res.object);
   });
 
@@ -28,8 +28,11 @@
     return index % 2 == 0 ? "even" : "odd";
   }
   function onPullToRefreshInitiated({ object }) {
-    // places.unshift(places.getItem(0));
-    object.notifyPullToRefreshFinished();
+    api.recommend(user).then((res) => {
+      places.splice(0);
+      places.push(res.object);
+      object.notifyPullToRefreshFinished();
+    });
   }
   function onItemTap({ index }) {
     // alert(`Item tapped: ${places.getItem(index).name}`);

@@ -11,6 +11,7 @@ import { Application } from "@nativescript/core";
 import RadListViewElement from "svelte-native-nativescript-ui/listview"
 import { registerNativeViewElement } from "svelte-native/dom";
 const imageModule = require('@nativescript-community/ui-image');
+const tnsfx = require('nativescript-effects');
 
 RadListViewElement.register();
 

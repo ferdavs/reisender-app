@@ -1,9 +1,12 @@
 import { injectable } from "inversify";
 import { Api, ApiResult } from "./api"
-import { User, Place } from "../models"
+import { User, Place, Feature } from "../models"
 
 @injectable()
 export class MockApi implements Api {
+    private mockImage(id) {
+        return "https://picsum.photos/id/" + id + "/300";
+    }
 
     login(user: User): Promise<ApiResult<User>> {
         if (Math.random() < 0.1) {
@@ -22,10 +25,20 @@ export class MockApi implements Api {
         result.object = user;
         return Promise.resolve(result);
     }
-    getFeatures(): Promise<ApiResult<any>> {
-        return Promise.resolve(new ApiResult());
+    getFeatures(): Promise<ApiResult<Feature[]>> {
+        let res = new ApiResult<Feature[]>(200, "{}");
+        let features: Feature[] = [];
+        for (let i = 0; i < 20; i++) {
+            let feature = new Feature();
+            feature.id = Math.round(Math.random() * 1000).toString();
+            feature.imageUrl = this.mockImage(feature.id);
+            feature.name = 'name' + feature.id;
+            features.push(feature);
+        }
+        res.object = features;
+        return Promise.resolve(res);
     }
-    sendFeatures(values: string[]): Promise<ApiResult<any>> {
+    sendFeatures(user: User): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
     recommend(): Promise<ApiResult<Place[]>> {
@@ -33,26 +46,25 @@ export class MockApi implements Api {
         let places: Place[] = [];
         for (let i = 0; i < 10; i++) {
             let place = new Place();
-            place.id = i.toString();
-            // place.imageUrl = "~/images/place_holder.png";
-            place.imageUrl = "https://upload.wikimedia.org/wikipedia/commons/2/22/Sun_Pyramid_05_2015_Teotihuacan_3304.JPG";
-            place.name = 'name' + i;
+            place.id = Math.round(Math.random() * 1000).toString();
+            place.imageUrl = this.mockImage(place.id);
+            place.name = 'name' + place.id;
             place.description = "description of " + place.name;
             places.push(place);
         }
         res.object = places;
         return Promise.resolve(res);
     }
-    wishListAdd(place: Place): Promise<ApiResult<any>> {
+    wishListAdd(user:User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    wishListDelete(place: Place): Promise<ApiResult<any>> {
+    wishListDelete(user:User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    visitedListAdd(place: Place): Promise<ApiResult<any>> {
+    visitedListAdd(user:User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    visitedListDelete(place: Place): Promise<ApiResult<any>> {
+    visitedListDelete(user:User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
     placeDetail(place: Place): Promise<ApiResult<any>> {

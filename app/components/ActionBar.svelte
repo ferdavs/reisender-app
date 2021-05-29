@@ -6,8 +6,14 @@
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<actionBar flat="true">
-  <label text={title} fontSize="24" horizontalAlignment="center" />
+<actionBar flat="false">
+  <label
+    id="actionBarText"
+    text={title}
+    fontSize="24"
+    class=""
+    horizontalAlignment="center"
+  />
   {#if action}
     <actionItem
       on:tap={action}

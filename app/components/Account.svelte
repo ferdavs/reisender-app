@@ -4,7 +4,6 @@
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
-  import PlaceInfo from "./PlaceInfo.svelte";
   export let user: User;
   let title = "";
   $: title = !isNull(user.name) ? user.name : user.username;

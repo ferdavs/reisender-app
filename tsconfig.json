@@ -3,6 +3,7 @@
         "module": "ESNext",
         "target": "ES2017",
         "moduleResolution": "node",
+        "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": false,
         "experimentalDecorators": true,

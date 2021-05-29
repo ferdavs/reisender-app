@@ -1,4 +1,4 @@
-import { User, Place } from "../models"
+import { User, Place, Feature } from "../models"
 
 export class ApiResult<T> {
     httpStatus: number;
@@ -37,13 +37,13 @@ export interface Api {
     login(user: User): Promise<ApiResult<User>>;
     loginFacebook(): Promise<ApiResult<User>>;
     register(user: User): Promise<ApiResult<User>>;
-    getFeatures(): Promise<ApiResult<any>>;
-    sendFeatures(values:string[]): Promise<ApiResult<any>>;
-    recommend(): Promise<ApiResult<Place[]>>;
-    wishListAdd(place: Place): Promise<ApiResult<any>>;
-    wishListDelete(place: Place): Promise<ApiResult<any>>;
-    visitedListAdd(place: Place): Promise<ApiResult<any>>;
-    visitedListDelete(place: Place): Promise<ApiResult<any>>;
+    getFeatures(): Promise<ApiResult<Feature[]>>;
+    sendFeatures(user:User): Promise<ApiResult<any>>;
+    recommend(user:User): Promise<ApiResult<Place[]>>;
+    wishListAdd(user:User, place: Place): Promise<ApiResult<any>>;
+    wishListDelete(user:User, place: Place): Promise<ApiResult<any>>;
+    visitedListAdd(user:User, place: Place): Promise<ApiResult<any>>;
+    visitedListDelete(user:User, place: Place): Promise<ApiResult<any>>;
     placeDetail(place: Place): Promise<ApiResult<Place>>;
     search(query: String): Promise<ApiResult<Place[]>>;
 }

@@ -1,30 +1,43 @@
 <script lang="ts">
   import { User } from "../data/models";
-  import { Api, container } from "../data/api";
+  import { namedApi } from "../data/api";
   import { login as fbLogin } from "nativescript-facebook-7";
   import { getFacebookInfo, storePut, sha } from "../util";
   import { navigate } from "svelte-native";
   import Register from "./Register.svelte";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
+  import Onboard from "./Onboard.svelte";
 
-  const api = container.getNamed<Api>("Api", "mock");
+  const api = namedApi("mock");
   export let user = new User();
   let password: string;
 
   function onRegister() {
     navigate({ page: Register });
   }
+
+  function storeHandle(user, stored) {
+    if (stored && user.firstLogin)
+      navigate({
+        page: Onboard,
+        clearHistory: true,
+        props: { user: user },
+      });
+    else if (stored)
+      navigate({ page: Main, clearHistory: true, props: { user: user } });
+    else console.log("error storing user");
+  }
+
   function onLogin() {
     user.password = sha.Sha256(password);
     api
       .login(user)
       .then((res) => {
         user.loggedIn = res.success;
-        storePut("user", JSON.stringify(user)).then((s) => {
-          if (s) navigate({ page: Main, props: { user: user } });
-          else console.log("error storing user");
-        });
+        storePut("user", JSON.stringify(user))
+          .then((stored) => storeHandle(user, stored))
+          .catch((error) => console.log("error user store : " + error));
       })
       .catch((err) => alert(err.object.message));
   }
@@ -46,10 +59,7 @@
             .register(user)
             .then((res) => {
               storePut("user", JSON.stringify(user))
-                .then((result) => {
-                  console.log("user store " + result);
-                  if (result) navigate({ page: Main, props: { user: user } });
-                })
+                .then((stored) => storeHandle(user, stored))
                 .catch((error) => console.log("error user store : " + error));
             })
             .catch((er) => console.log(er));
@@ -63,7 +73,7 @@
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <ActionBar title={"Reisender"} />
 
-  <stackLayout>
+  <stackLayout class="layout">
     <textField
       bind:text={user.username}
       hint="Username..."
@@ -88,6 +98,10 @@
 </page>
 
 <style>
+  .layout {
+    margin-left: 16;
+    margin-right: 16;
+  }
   .text {
     margin: 16;
     margin-top: 24;
