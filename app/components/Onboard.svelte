@@ -29,9 +29,9 @@
   function onItemTap({ index, object }) {
     let item = features.getItem(index);
     item.toggle();
-    // item.toggle() ? object.selectItemAt(index) : object.deselectItemAt(index);
     if (item.selected) user.features.push(item);
     else user.features.splice(user.features.indexOf(item), 1);
+    object.refresh();
   }
 
   function onDone() {
