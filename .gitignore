@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,visualstudiocode,git,node
 platforms/
 .vscode/
+hooks/
 ### Android ###
 # Built application files
 *.apk
