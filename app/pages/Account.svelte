@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ObservableArray } from "@nativescript/core";
   import { navigate, goBack } from "svelte-native";
-  import { isNull, storeDeleteAll, storeGetSync, storePut } from "~/util";
+  import { isNull, storeDeleteAll } from "~/util";
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";

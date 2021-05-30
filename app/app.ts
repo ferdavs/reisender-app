@@ -5,7 +5,7 @@ purpose of the file is to pass control to the app’s first module.
 */
 
 import { svelteNative } from "svelte-native";
-import App from "./components/App.svelte";
+import App from "./pages/App.svelte";
 import { init } from "nativescript-facebook-7";
 import { Application } from "@nativescript/core";
 import RadListViewElement from "svelte-native-nativescript-ui/listview"
