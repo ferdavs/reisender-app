@@ -1,3 +1,4 @@
+import { fromJson } from "~/util";
 import { User, Place, Feature } from "../models"
 
 export class ApiResult<T> {
@@ -12,7 +13,7 @@ export class ApiResult<T> {
     }
     set json(val: string) {
         this._json = val;
-        this.object = val === null || val === undefined ? {} : JSON.parse(val);
+        this.object = val === null || val === undefined ? {} : fromJson(val);
     }
     get json(): string {
         return this._json;

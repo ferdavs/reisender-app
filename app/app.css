@@ -14,3 +14,28 @@ The imported CSS rules must precede all other types of rules.
 @import '~@nativescript/theme/css/default.css';
 @import './font-awesome.css';
 
+.margin-rl-16 {
+    margin-left: 16;
+    margin-right: 16;
+  }
+.input-text {
+    margin: 16;
+    margin-top: 24;
+    font-size: 18;
+    placeholder-color: gray;
+  }
+.btn-large {
+    font-size: 18;
+    font-weight: bold;
+    height: 64;
+  }
+.fb-login-button {
+    background: #3b5998;
+    color: white;
+  }
+.link {
+    border-color: transparent;
+    border-width: 1;
+    z-index: 0;
+    text-align: right;
+  }

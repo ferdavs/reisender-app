@@ -4,12 +4,13 @@
   import {
     ListViewLoadOnDemandMode,
     ListViewViewType,
+    RadListView,
   } from "nativescript-ui-listview";
   import { navigate } from "svelte-native";
   import { Template } from "svelte-native/components";
   import { namedApi } from "~/data/api";
   import { Feature, User } from "~/data/models";
-  import { storePut } from "~/util";
+  import { storePut, toJson } from "~/util";
   import ActionBar from "./ActionBar.svelte";
   import Card from "./Card.svelte";
   import Main from "./Main.svelte";
@@ -21,9 +22,7 @@
 
   api
     .getFeatures()
-    .then((res) => {
-      features.push(res.object);
-    })
+    .then((res) => features.push(res.object))
     .catch((err) => console.log(err));
 
   function onItemTap({ index, object }) {
@@ -38,13 +37,21 @@
     if (user.features.length < 5)
       getCurrentPage().getViewById("actionBarText").shake();
     else
-      api.sendFeatures(user).then((res) => {
-        user.firstLogin = false;
-        storePut("user", JSON.stringify(user)).then((stored) => {
+      api
+        .sendFeatures(user)
+        .then((res) => {
+          user.firstLogin = false;
+          return toJson(user);
+        })
+        .then((user) => storePut("user", user))
+        .then((stored) => {
           if (stored)
-            navigate({ page: Main, clearHistory: true, props: { user: user } });
+            navigate({
+              page: Main,
+              clearHistory: true,
+              props: { user: user },
+            });
         });
-      });
   }
 </script>
 
@@ -57,6 +64,7 @@
   />
   <radListView
     id="listView"
+    recycleNativeView="always"
     items={features}
     loadOnDemandMode={ListViewLoadOnDemandMode.None}
     multipleSelection="true"

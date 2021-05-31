@@ -1,7 +1,7 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { namedApi } from "../data/api/index";
-  import { isNull, sha, storePut } from "~/util";
+  import { isNull, sha, storePut, toJson } from "~/util";
   import { navigate } from "svelte-native";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
@@ -25,16 +25,13 @@
     );
   }
 
-  function storeHandle(user, stored) {
-    if (stored && user.firstLogin)
-      navigate({
-        page: Onboard,
-        clearHistory: true,
-        props: { user: user },
-      });
-    else if (stored)
-      navigate({ page: Main, clearHistory: true, props: { user: user } });
-    else console.log("error storing user");
+  function storeHandle(user: User, stored: boolean) {
+    if (!stored) {
+      console.log("error storing user");
+      return;
+    }
+    let page = user.firstLogin ? Onboard : Main;
+    navigate({ page: page, clearHistory: true, props: { user: user } });
   }
 
   function onRegister() {
@@ -42,12 +39,13 @@
       user.password = sha.Sha256(pass2);
       api
         .register(user)
-        .then((res) => {
-          storePut("user", JSON.stringify(user))
-            .then((stored) => storeHandle(user, stored))
-            .catch((error) => console.log("error user store : " + error));
+        .then((_) => {
+          user.loggedIn = true;
+          return storePut("user", toJson(user));
         })
-        .catch((err) => alert("Error: " + err.object.message));
+        .then((stored) => storeHandle(user, stored))
+        .catch((error) => console.log("error user store : " + error))
+        .catch((error) => alert("Error: " + error.object.message));
     } else {
       getCurrentPage().getViewById("pass1Text").shake();
       getCurrentPage().getViewById("pass2Text").shake();
@@ -64,43 +62,28 @@
       bind:text={user.username}
       hint="Username..."
       keyboardType="email"
-      class="text"
+      class="input-text"
     />
     <textField
       id="pass1Text"
       bind:text={pass1}
       hint="Password..."
       secure="true"
-      class="text {red}"
+      class="input-text {red}"
     />
     <textField
       id="pass2Text"
       bind:text={pass2}
       hint="Repeat Password..."
       secure="true"
-      class="text {red}"
+      class="input-text {red}"
     />
 
-    <button text="Register" on:tap={onRegister} class="btn" />
+    <button text="Register" on:tap={onRegister} class="btn-large" />
   </stackLayout>
 </page>
 
 <style>
-  .layout {
-    margin-left: 16;
-    margin-right: 16;
-  }
-  .text {
-    margin: 16;
-    margin-top: 24;
-    font-size: 18;
-    placeholder-color: gray;
-  }
-  .btn {
-    font-size: 18;
-    font-weight: bold;
-    height: 64;
-  }
   .red {
     border-style: dashed;
     border-color: orangered;

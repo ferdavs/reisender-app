@@ -3,7 +3,7 @@ export class User {
     name: string;
     username: string;
     password: string;
-    fbData: object;
+    fbData: any;
     loggedIn: boolean;
     firstLogin: boolean;
     wishlist: Place[];

@@ -5,7 +5,6 @@
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
-  import PlaceInfo from "./PlaceInfo.svelte";
   import PlaceList from "./PlaceList.svelte";
 
   export let user: User;
@@ -25,27 +24,6 @@
   }
 
   function onDelete() {}
-
-  function onVisitedItemTap({ index }) {
-    navigate({
-      page: PlaceInfo,
-      props: {
-        place: visited.getItem(index),
-        visited: visited,
-        wishlist: wishlist,
-      },
-    });
-  }
-  function onWishlistItemTap({ index }) {
-    navigate({
-      page: PlaceInfo,
-      props: {
-        place: wishlist.getItem(index),
-        visited: visited,
-        wishlist: wishlist,
-      },
-    });
-  }
 </script>
 
 <page>
@@ -56,26 +34,10 @@
     fontIcon="font://&#xf053;"
   />
   <stackLayout>
-    <PlaceList
-      text="Wishlist"
-      bind:list={wishlist}
-      onItemTap={onWishlistItemTap}
-    />
+    <PlaceList text="Wishlist" list={wishlist} {visited} {wishlist} />
     <!-- <stackLayout class="hr m-10" /> -->
-    <PlaceList
-      text="Visited"
-      bind:list={visited}
-      onItemTap={onVisitedItemTap}
-    />
-    <button text="Log out" on:tap={onLogout} class="btn" />
-    <button text="Delete Account" on:tap={onDelete} class="btn" />
+    <PlaceList text="Visited" list={visited} {visited} {wishlist} />
+    <button text="Log out" on:tap={onLogout} class="btn-large" />
+    <button text="Delete Account" on:tap={onDelete} class="btn-large" />
   </stackLayout>
 </page>
-
-<style>
-  .btn {
-    font-size: 18;
-    font-weight: bold;
-    height: 64;
-  }
-</style>

@@ -5,8 +5,16 @@ import { Sha } from "@plmservices/nativescript-sha";
 export const sha = new Sha();
 const storage = new SecureStorage()
 
-export async function getFacebookInfo(token: string) {
-    return await Http.getJSON(
+export function toJson(val) {
+    return JSON.stringify(val);
+}
+
+export function fromJson(val) {
+    return JSON.parse(val);
+}
+
+export function getFacebookInfo(token: string) {
+    return Http.getJSON(
         "https://graph.facebook.com/me?fields=id,name,email&access_token=" + token
     );
 }

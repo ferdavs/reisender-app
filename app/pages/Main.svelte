@@ -12,7 +12,7 @@
   import { ObservableArray } from "@nativescript/core";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
-  import { storeGetSync, storePut } from "~/util";
+  import { fromJson, storeGetSync, storePut, toJson } from "~/util";
 
   const api = namedApi("mock");
 
@@ -20,6 +20,9 @@
   const places = new ObservableArray<Place>();
   let visited = new ObservableArray<Place>();
   let wishlist = new ObservableArray<Place>();
+  
+  visited.push(fromJson(storeGetSync("visited", "[]")));
+  wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
 
   api.recommend(user).then((res) => {
     places.push(res.object);
@@ -49,15 +52,16 @@
       },
     });
   }
-  visited.push(JSON.parse(storeGetSync("visited", "[]")));
-  wishlist.push(JSON.parse(storeGetSync("wishlist", "[]")));
+
+  // visited.push(fromJson(storeGetSync("visited", "[]")));
+  // wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
 
   visited.on(ObservableArray.changeEvent, (event) => {
-    storePut("visited", JSON.stringify(visited.map<Place>((value) => value)));
+    storePut("visited", toJson(visited));
   });
 
   wishlist.on(ObservableArray.changeEvent, (event) => {
-    storePut("wishlist", JSON.stringify(wishlist.map<Place>((value) => value)));
+    storePut("wishlist", toJson(wishlist));
   });
 </script>
 
@@ -72,6 +76,7 @@
   <radListView
     items={places}
     loadOnDemandMode={ListViewLoadOnDemandMode.None}
+    recycleNativeView="always"
     pullToRefresh="true"
     on:pullToRefreshInitiated={onPullToRefreshInitiated}
     on:itemTap={onItemTap}
