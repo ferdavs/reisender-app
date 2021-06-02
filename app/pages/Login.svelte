@@ -19,7 +19,7 @@
 
   function storeHandle(user: User, stored: boolean) {
     if (!stored) {
-      console.log("error storing user");
+      error("error storing user");
       return;
     }
     let page = user.firstLogin ? Onboard : Main;
@@ -34,9 +34,9 @@
         user.loggedIn = res.success;
         storePut("user", toJson(user))
           .then((stored) => storeHandle(user, stored))
-          .catch((error) => console.log("error user store : " + error));
+          .catch((error) => warn("cannot store user " + error));
       })
-      .catch((err) => alert(err.object.message));
+      .catch((err) => error(err.object.message));
   }
 
   function onFBLogin() {
@@ -59,13 +59,21 @@
         return storePut("user", toJson(user));
       })
       .then((stored) => storeHandle(user, stored))
-      .catch((error) => console.log("error user store : " + error));
+      .catch((error) => error(error));
+  }
+
+  let infoText: string = null;
+  function error(text: string) {
+    infoText = "Error: " + text;
+  }
+  function warn(text: string) {
+    infoText = "Warning: " + text;
   }
 </script>
 
 <page actionBarHidden="false">
   <!-- svelte-ignore a11y-label-has-associated-control -->
-  <ActionBar title={"Reisender"} />
+  <ActionBar title={"Reisender"} bind:infoText />
 
   <stackLayout class="margin-rl-16">
     <textField

@@ -10,6 +10,7 @@
   import { Place } from "~/data/models";
   import Card from "./Card.svelte";
   import PlaceInfo from "./PlaceInfo.svelte";
+  
   export let text: string;
   export let list: ObservableArray<Place>;
   export let visited = new ObservableArray<Place>();

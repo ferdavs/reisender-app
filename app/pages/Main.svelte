@@ -10,9 +10,9 @@
   } from "nativescript-ui-listview";
   import { Template } from "svelte-native/components";
   import { ObservableArray } from "@nativescript/core";
+  import { fromJson, storeGetSync, storePut, toJson } from "~/util";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
-  import { fromJson, storeGetSync, storePut, toJson } from "~/util";
 
   const api = namedApi("mock");
 
@@ -57,11 +57,11 @@
   // wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
 
   visited.on(ObservableArray.changeEvent, (event) => {
-    storePut("visited", toJson(visited));
+    storePut("visited", toJson(visited.concat([])));
   });
 
   wishlist.on(ObservableArray.changeEvent, (event) => {
-    storePut("wishlist", toJson(wishlist));
+    storePut("wishlist", toJson(wishlist.concat([])));
   });
 </script>
 

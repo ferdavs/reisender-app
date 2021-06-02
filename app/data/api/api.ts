@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from "@nativescript/core/utils/types";
 import { fromJson } from "~/util";
 import { User, Place, Feature } from "../models"
 
@@ -13,7 +14,7 @@ export class ApiResult<T> {
     }
     set json(val: string) {
         this._json = val;
-        this.object = val === null || val === undefined ? {} : fromJson(val);
+        this.object = isNullOrUndefined(val) ? {} : fromJson(val);
     }
     get json(): string {
         return this._json;

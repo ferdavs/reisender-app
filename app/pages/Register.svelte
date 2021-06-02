@@ -1,11 +1,12 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { namedApi } from "../data/api/index";
-  import { isNull, sha, storePut, toJson } from "~/util";
+  import { sha, storePut, toJson } from "~/util";
   import { navigate } from "svelte-native";
+  import { getCurrentPage } from "@nativescript/core";
+  import { isNullOrUndefined } from "@nativescript/core/utils/types";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
-  import { getCurrentPage, StackLayout } from "@nativescript/core";
   import Onboard from "./Onboard.svelte";
 
   const api = namedApi("mock");
@@ -19,7 +20,7 @@
 
   function isValid(pass1: string, pass2: string) {
     return (
-      !(isNull(pass1) || isNull(pass2)) &&
+      !(isNullOrUndefined(pass1) || isNullOrUndefined(pass2)) &&
       pass1 === pass2 &&
       pass1.trim() !== ""
     );

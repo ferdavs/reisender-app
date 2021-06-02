@@ -4,7 +4,6 @@
   import {
     ListViewLoadOnDemandMode,
     ListViewViewType,
-    RadListView,
   } from "nativescript-ui-listview";
   import { navigate } from "svelte-native";
   import { Template } from "svelte-native/components";
@@ -34,24 +33,24 @@
   }
 
   function onDone() {
-    if (user.features.length < 5)
-      getCurrentPage().getViewById("actionBarText").shake();
-    else
-      api
-        .sendFeatures(user)
-        .then((res) => {
-          user.firstLogin = false;
-          return toJson(user);
-        })
-        .then((user) => storePut("user", user))
-        .then((stored) => {
-          if (stored)
-            navigate({
-              page: Main,
-              clearHistory: true,
-              props: { user: user },
-            });
-        });
+    if (user.features.length < 5) {
+      getCurrentPage().getViewById("titleText").shake();
+      return;
+    }
+    api
+      .sendFeatures(user)
+      .then((res) => {
+        user.firstLogin = false;
+        return storePut("user", toJson(user));
+      })
+      .then((stored) => {
+        if (stored)
+          navigate({
+            page: Main,
+            clearHistory: true,
+            props: { user: user },
+          });
+      });
   }
 </script>
 

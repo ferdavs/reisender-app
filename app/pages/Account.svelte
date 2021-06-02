@@ -1,7 +1,8 @@
 <script lang="ts">
   import { ObservableArray } from "@nativescript/core";
+  import { isNullOrUndefined } from "@nativescript/core/utils/types";
   import { navigate, goBack } from "svelte-native";
-  import { isNull, storeDeleteAll } from "~/util";
+  import { storeDeleteAll } from "~/util";
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
@@ -12,7 +13,7 @@
   export let wishlist = new ObservableArray<Place>();
 
   let title = "";
-  $: title = isNull(user.name) ? user.username : user.name;
+  $: title = isNullOrUndefined(user.name) ? user.username : user.name;
   function onLogout() {
     storeDeleteAll().then((res) => {
       if (res)

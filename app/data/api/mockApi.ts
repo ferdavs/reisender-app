@@ -9,9 +9,8 @@ export class MockApi implements Api {
     }
 
     login(user: User): Promise<ApiResult<User>> {
-        if (Math.random() < 0.1) {
-            return Promise.reject(new ApiResult(404, '{"message":"not found"}'));
-        }
+        if (Math.random() < 0.1)
+            return Promise.reject(new ApiResult(503, '{"message":"Server error"}'));
         return Promise.resolve(new ApiResult(200, "{}"));
     }
     loginFacebook(): Promise<ApiResult<User>> {
@@ -54,16 +53,16 @@ export class MockApi implements Api {
         res.object = places;
         return Promise.resolve(res);
     }
-    wishListAdd(user:User, place: Place): Promise<ApiResult<any>> {
+    wishListAdd(user: User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    wishListDelete(user:User, place: Place): Promise<ApiResult<any>> {
+    wishListDelete(user: User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    visitedListAdd(user:User, place: Place): Promise<ApiResult<any>> {
+    visitedListAdd(user: User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    visitedListDelete(user:User, place: Place): Promise<ApiResult<any>> {
+    visitedListDelete(user: User, place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
     placeDetail(place: Place): Promise<ApiResult<any>> {
