@@ -12,6 +12,7 @@
     infoText = null;
   }
   setInterval(disable, 5000);
+
   $: html = "<h4 style='text-align:center;'>" + infoText + "</h4>";
   $: style = infoText && infoText.startsWith("Warn") ? "warn" : "error";
 </script>
@@ -56,14 +57,14 @@
     width: 100%;
   }
   .error {
-    height: 30;
+    height: fit-content;
     width: 100%;
     text-align: center;
     color: whitesmoke;
     background-color: crimson;
   }
   .warn {
-    height: 30;
+    height: fit-content;
     width: 100%;
     text-align: center;
     background-color: orange;

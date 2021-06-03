@@ -1,6 +1,7 @@
 import { injectable, inject, named } from "inversify";
-import { Api, ApiResult } from "./api"
+import { ApiResult } from "./api"
 import { User, Place, Feature } from "../models"
+import { Api } from ".";
 
 @injectable()
 export class Repo implements Api {
@@ -21,22 +22,22 @@ export class Repo implements Api {
     getFeatures(): Promise<ApiResult<Feature[]>> {
         return this._api.getFeatures();
     }
-    sendFeatures(user:User): Promise<ApiResult<any>> {
+    sendFeatures(user: User): Promise<ApiResult<any>> {
         return this._api.sendFeatures(user);
     }
-    recommend(user:User): Promise<ApiResult<Place[]>> {
+    recommend(user: User): Promise<ApiResult<Place[]>> {
         return this._api.recommend(user);
     }
-    wishListAdd(user:User, place: Place): Promise<ApiResult<any>> {
+    wishListAdd(user: User, place: Place): Promise<ApiResult<any>> {
         return this._api.wishListAdd(user, place)
     }
-    wishListDelete(user:User, place: Place): Promise<ApiResult<any>> {
+    wishListDelete(user: User, place: Place): Promise<ApiResult<any>> {
         return this._api.wishListDelete(user, place);
     }
-    visitedListAdd(user:User, place: Place): Promise<ApiResult<any>> {
+    visitedListAdd(user: User, place: Place): Promise<ApiResult<any>> {
         return this._api.visitedListAdd(user, place);
     }
-    visitedListDelete(user:User, place: Place): Promise<ApiResult<any>> {
+    visitedListDelete(user: User, place: Place): Promise<ApiResult<any>> {
         return this._api.visitedListDelete(user, place);
     }
     placeDetail(place: Place): Promise<ApiResult<any>> {

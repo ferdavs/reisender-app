@@ -11,6 +11,7 @@
   "dependencies": {
     "@nativescript-community/ui-image": "^4.0.23",
     "@nativescript/core": "~7.0.0",
+    "@nativescript/secure-storage": "^3.0.0",
     "@nativescript/theme": "^2.3.4",
     "@nativescript/webpack": "3.0.0",
     "@plmservices/nativescript-sha": "^2.0.2",
@@ -19,7 +20,6 @@
     "nativescript-cache": "^1.0.0",
     "nativescript-effects": "^2.0.0",
     "nativescript-facebook-7": "^7.0.4",
-    "nativescript-secure-storage": "^2.6.2",
     "nativescript-ui-listview": "^9.1.0",
     "reflect-metadata": "^0.1.13",
     "svelte-native": "~0.9.1",

@@ -1,8 +1,7 @@
-<script type="text/typescript">
+<script setup type="text/typescript">
   import { User, Place } from "../data/models";
   import { navigate } from "svelte-native";
   import Account from "./Account.svelte";
-  import { namedApi } from "~/data/api";
   import Card from "./Card.svelte";
   import {
     ListViewLoadOnDemandMode,
@@ -10,19 +9,31 @@
   } from "nativescript-ui-listview";
   import { Template } from "svelte-native/components";
   import { ObservableArray } from "@nativescript/core";
-  import { fromJson, storeGetSync, storePut, toJson } from "~/util";
+  import { named } from "~/util";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
+  import SStorage from "~/data/storage";
+  import { Api } from "~/data/api";
 
-  const api = namedApi("mock");
+  const api: Api = named("Api", "mock");
+  const store: SStorage = named("SStorage");
 
   export let user: User = new User();
   const places = new ObservableArray<Place>();
   let visited = new ObservableArray<Place>();
   let wishlist = new ObservableArray<Place>();
-  
-  visited.push(fromJson(storeGetSync("visited", "[]")));
-  wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
+
+  store
+    .get("visited")
+    .then((val) => (val ? val : []))
+    .then((val) => visited.push(val))
+    .catch((err) => console.log(err));
+
+  store
+    .get("wishlist")
+    .then((val) => (val ? val : []))
+    .then((val) => wishlist.push(val))
+    .catch((err) => console.log(err));
 
   api.recommend(user).then((res) => {
     places.push(res.object);
@@ -57,11 +68,11 @@
   // wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
 
   visited.on(ObservableArray.changeEvent, (event) => {
-    storePut("visited", toJson(visited.concat([])));
+    store.put("visited", visited.concat([]));
   });
 
   wishlist.on(ObservableArray.changeEvent, (event) => {
-    storePut("wishlist", toJson(wishlist.concat([])));
+    store.put("wishlist", wishlist.concat([]));
   });
 </script>
 

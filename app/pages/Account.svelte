@@ -2,7 +2,8 @@
   import { ObservableArray } from "@nativescript/core";
   import { isNullOrUndefined } from "@nativescript/core/utils/types";
   import { navigate, goBack } from "svelte-native";
-  import { storeDeleteAll } from "~/util";
+  import SStorage from "~/data/storage";
+  import { named } from "~/util";
   import { User, Place } from "../data/models";
   import ActionBar from "./ActionBar.svelte";
   import Login from "./Login.svelte";
@@ -11,11 +12,12 @@
   export let user: User;
   export let visited = new ObservableArray<Place>();
   export let wishlist = new ObservableArray<Place>();
+  const store: SStorage = named("SStorage");
 
   let title = "";
   $: title = isNullOrUndefined(user.name) ? user.username : user.name;
   function onLogout() {
-    storeDeleteAll().then((res) => {
+    store.clear().then((res) => {
       if (res)
         navigate({
           page: Login,

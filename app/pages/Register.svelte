@@ -1,15 +1,17 @@
 <script lang="ts">
   import { User } from "../data/models";
-  import { namedApi } from "../data/api/index";
-  import { sha, storePut, toJson } from "~/util";
+  import { named, sha } from "~/util";
   import { navigate } from "svelte-native";
   import { getCurrentPage } from "@nativescript/core";
   import { isNullOrUndefined } from "@nativescript/core/utils/types";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
   import Onboard from "./Onboard.svelte";
+  import SStorage from "~/data/storage";
+  import { Api } from "~/data/api";
 
-  const api = namedApi("mock");
+  const api: Api = named("Api", "mock");
+  const store: SStorage = named("SStorage");
 
   export let user = new User();
 
@@ -42,7 +44,7 @@
         .register(user)
         .then((_) => {
           user.loggedIn = true;
-          return storePut("user", toJson(user));
+          return store.put("user", user);
         })
         .then((stored) => storeHandle(user, stored))
         .catch((error) => console.log("error user store : " + error))

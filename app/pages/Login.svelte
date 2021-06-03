@@ -1,16 +1,18 @@
 <script lang="ts">
   import { User } from "../data/models";
-  import { namedApi } from "../data/api";
   import { login as fb } from "nativescript-facebook-7";
-  import { getFacebookInfo, storePut, sha, toJson } from "../util";
+  import { getFacebookInfo, named, sha } from "../util";
   import { navigate } from "svelte-native";
   import Register from "./Register.svelte";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
   import Onboard from "./Onboard.svelte";
+  import SStorage from "~/data/storage";
+  import { Api } from "~/data/api";
 
-  const api = namedApi("mock");
   export let user = new User();
+  const store: SStorage = named("SStorage");
+  const api: Api = named("Api", "mock");
   let password: string;
 
   function onRegister() {
@@ -32,7 +34,8 @@
       .login(user)
       .then((res) => {
         user.loggedIn = res.success;
-        storePut("user", toJson(user))
+        store
+          .put("user", user)
           .then((stored) => storeHandle(user, stored))
           .catch((error) => warn("cannot store user " + error));
       })
@@ -56,7 +59,7 @@
       })
       .then((res) => {
         user.loggedIn = res.success;
-        return storePut("user", toJson(user));
+        return store.put("user", user);
       })
       .then((stored) => storeHandle(user, stored))
       .catch((error) => error(error));

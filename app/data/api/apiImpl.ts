@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
-import { Api, ApiResult } from "./api"
+import { ApiResult } from "./api"
 import { User, Place, Feature } from "../models"
+import { Api } from ".";
 
 @injectable()
 export class ApiImpl implements Api {

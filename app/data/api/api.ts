@@ -40,12 +40,12 @@ export interface Api {
     loginFacebook(): Promise<ApiResult<User>>;
     register(user: User): Promise<ApiResult<User>>;
     getFeatures(): Promise<ApiResult<Feature[]>>;
-    sendFeatures(user:User): Promise<ApiResult<any>>;
-    recommend(user:User): Promise<ApiResult<Place[]>>;
-    wishListAdd(user:User, place: Place): Promise<ApiResult<any>>;
-    wishListDelete(user:User, place: Place): Promise<ApiResult<any>>;
-    visitedListAdd(user:User, place: Place): Promise<ApiResult<any>>;
-    visitedListDelete(user:User, place: Place): Promise<ApiResult<any>>;
+    sendFeatures(user: User): Promise<ApiResult<any>>;
+    recommend(user: User): Promise<ApiResult<Place[]>>;
+    wishListAdd(user: User, place: Place): Promise<ApiResult<any>>;
+    wishListDelete(user: User, place: Place): Promise<ApiResult<any>>;
+    visitedListAdd(user: User, place: Place): Promise<ApiResult<any>>;
+    visitedListDelete(user: User, place: Place): Promise<ApiResult<any>>;
     placeDetail(place: Place): Promise<ApiResult<Place>>;
     search(query: String): Promise<ApiResult<Place[]>>;
 }
