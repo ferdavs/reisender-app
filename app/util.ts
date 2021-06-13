@@ -4,7 +4,6 @@ import "reflect-metadata";
 import { Http } from "@nativescript/core";
 import { SecureStorage } from "@nativescript/secure-storage"
 import { Sha } from "@plmservices/nativescript-sha";
-import { log, profile } from "@nativescript/core/profiling";
 
 export const sha = new Sha();
 const inversify = new Container();

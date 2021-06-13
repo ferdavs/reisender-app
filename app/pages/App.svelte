@@ -1,6 +1,6 @@
 <script type="text/typescript">
   import { User } from "../data/models";
-  import { fromJson, named } from "../util";
+  import { named } from "../util";
   import { onMount, tick } from "svelte";
   import { navigate } from "svelte-native";
   import { isNullOrUndefined } from "@nativescript/core/utils/types";
