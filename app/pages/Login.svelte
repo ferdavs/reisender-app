@@ -1,18 +1,18 @@
 <script lang="ts">
   import { User } from "../data/models";
   import { login as fb } from "nativescript-facebook-7";
-  import { getFacebookInfo, named, sha } from "../util";
+  import { getFacebookInfo, inject, sha } from "../util";
   import { navigate } from "svelte-native";
   import Register from "./Register.svelte";
   import Main from "./Main.svelte";
   import ActionBar from "./ActionBar.svelte";
   import Onboard from "./Onboard.svelte";
   import SStorage from "~/data/storage";
-  import { Api } from "~/data/api";
+  import Api from "~/data/api";
 
   export let user = new User();
-  const store: SStorage = named("SStorage");
-  const api: Api = named("Api", "mock");
+  const api: Api = inject("Api");
+  const store: SStorage = inject("SStorage");
   let password: string;
 
   function onRegister() {

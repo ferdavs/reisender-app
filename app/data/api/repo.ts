@@ -1,48 +1,52 @@
 import { injectable, inject, named } from "inversify";
 import { Api, ApiResult } from "./api"
 import { User, Place, Feature } from "../models"
+import SStorage from "../storage";
 
 @injectable()
 export class Repo implements Api {
-    _api: Api;
-    constructor(@inject("Api") @named('impl') api: Api) {
-        this._api = api;
+    private api: Api;
+    private store: SStorage;
+    //for Api @named must be used here, cause Repo is default 
+    constructor(@inject("Api") @named('mock') api: Api, @inject("SStorage") store: SStorage) {
+        this.api = api;
+        this.store = store;
     }
 
     login(user: User): Promise<ApiResult<User>> {
-        return this._api.login(user);
+        return this.api.login(user);
     }
     loginFacebook(): Promise<ApiResult<User>> {
-        return this._api.loginFacebook();
+        return this.api.loginFacebook();
     }
     register(user: User): Promise<ApiResult<User>> {
-        return this._api.register(user);
+        return this.api.register(user);
     }
     getFeatures(): Promise<ApiResult<Feature[]>> {
-        return this._api.getFeatures();
+        return this.api.getFeatures();
     }
     sendFeatures(user: User): Promise<ApiResult<any>> {
-        return this._api.sendFeatures(user);
+        return this.api.sendFeatures(user);
     }
     recommend(user: User): Promise<ApiResult<Place[]>> {
-        return this._api.recommend(user);
+        return this.api.recommend(user);
     }
     wishListAdd(user: User, place: Place): Promise<ApiResult<any>> {
-        return this._api.wishListAdd(user, place)
+        return this.api.wishListAdd(user, place)
     }
     wishListDelete(user: User, place: Place): Promise<ApiResult<any>> {
-        return this._api.wishListDelete(user, place);
+        return this.api.wishListDelete(user, place);
     }
     visitedListAdd(user: User, place: Place): Promise<ApiResult<any>> {
-        return this._api.visitedListAdd(user, place);
+        return this.api.visitedListAdd(user, place);
     }
     visitedListDelete(user: User, place: Place): Promise<ApiResult<any>> {
-        return this._api.visitedListDelete(user, place);
+        return this.api.visitedListDelete(user, place);
     }
     placeDetail(place: Place): Promise<ApiResult<any>> {
-        return this._api.placeDetail(place);
+        return this.api.placeDetail(place);
     }
-    search(query: String): Promise<ApiResult<any>> {
-        return this._api.search(query);
+    search(query: string): Promise<ApiResult<any>> {
+        return this.api.search(query);
     }
 }

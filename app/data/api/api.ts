@@ -7,9 +7,9 @@ export class ApiResult<T> {
     _json: string;
     object: T;
     success: boolean;
-    constructor(httpStatus = 200, json = "{}") {
+    constructor(httpStatus = 200, json?:T) {
         this.httpStatus = httpStatus;
-        this.json = json;
+        this.object = json;
         this.success = 300 > httpStatus && httpStatus >= 200;
     }
     set json(val: string) {
@@ -47,5 +47,5 @@ export interface Api {
     visitedListAdd(user: User, place: Place): Promise<ApiResult<any>>;
     visitedListDelete(user: User, place: Place): Promise<ApiResult<any>>;
     placeDetail(place: Place): Promise<ApiResult<Place>>;
-    search(query: String): Promise<ApiResult<Place[]>>;
+    search(query: string): Promise<ApiResult<Place[]>>;
 }

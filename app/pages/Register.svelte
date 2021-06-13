@@ -1,6 +1,6 @@
 <script lang="ts">
   import { User } from "../data/models";
-  import { named, sha } from "~/util";
+  import { inject, sha } from "~/util";
   import { navigate } from "svelte-native";
   import { getCurrentPage } from "@nativescript/core";
   import { isNullOrUndefined } from "@nativescript/core/utils/types";
@@ -8,10 +8,10 @@
   import ActionBar from "./ActionBar.svelte";
   import Onboard from "./Onboard.svelte";
   import SStorage from "~/data/storage";
-  import { Api } from "~/data/api";
+  import Api from "~/data/api";
 
-  const api: Api = named("Api", "mock");
-  const store: SStorage = named("SStorage");
+  const api: Api = inject("Api");
+  const store: SStorage = inject("SStorage");
 
   export let user = new User();
 

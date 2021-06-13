@@ -7,19 +7,19 @@
   } from "nativescript-ui-listview";
   import { navigate } from "svelte-native";
   import { Template } from "svelte-native/components";
-  import { Api } from "~/data/api";
+  import Api from "~/data/api";
   import { Feature, User } from "~/data/models";
   import SStorage from "~/data/storage";
-  import { named } from "~/util";
+  import { inject } from "~/util";
   import ActionBar from "./ActionBar.svelte";
   import Card from "./Card.svelte";
   import Main from "./Main.svelte";
 
   export let user: User = null;
-  const api: Api = named("Api", "mock");
+  const api: Api = inject("Api");
+  const store: SStorage = inject("SStorage");
   const title = "Choose at least 5";
   const features = new ObservableArray<Feature>();
-  const store: SStorage = named("SStorage");
 
   api
     .getFeatures()
@@ -78,7 +78,7 @@
     <Template type={ListViewViewType.ItemView} let:item>
       {#if item !== undefined}
         <Card
-          imageUrl={item.imageUrl}
+          imageUrl={item.image_url}
           name={item.name}
           height="150"
           width="180"

@@ -39,3 +39,25 @@ The imported CSS rules must precede all other types of rules.
     z-index: 0;
     text-align: right;
   }
+
+.fab-button {
+    height: 70;
+    width: 70; 
+    margin-right: 20;
+    margin-bottom: 20;
+    background-color: #ff4081;
+    text-align: center;
+    font-size: 32;
+    horizontal-align: right;
+    vertical-align: bottom;
+    border-radius: 40;
+}
+
+.search-box{
+  height: 50;
+  margin-bottom: 30;
+  font-size: 24;
+  width: 75%;
+  horizontal-align: left;
+  vertical-align: bottom;
+}

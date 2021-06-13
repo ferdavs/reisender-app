@@ -1,6 +1,6 @@
 <script type="text/typescript">
   import { User } from "../data/models";
-  import { named } from "../util";
+  import { inject } from "../util";
   import { onMount, tick } from "svelte";
   import { navigate } from "svelte-native";
   import { isNullOrUndefined } from "@nativescript/core/utils/types";
@@ -8,7 +8,7 @@
   import Login from "./Login.svelte";
   import Onboard from "./Onboard.svelte";
   import SStorage from "~/data/storage";
-  const store: SStorage = named("SStorage");
+  const store: SStorage = inject("SStorage");
 
   onMount(async () => {
     await tick();

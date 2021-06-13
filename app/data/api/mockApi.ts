@@ -11,7 +11,7 @@ export class MockApi implements Api {
     login(user: User): Promise<ApiResult<User>> {
         if (Math.random() < 0.1)
             return Promise.reject(new ApiResult(503, '{"message":"Server error"}'));
-        return Promise.resolve(new ApiResult(200, "{}"));
+        return Promise.resolve(new ApiResult(200, new User("1", this.generateName())));
     }
     loginFacebook(): Promise<ApiResult<User>> {
         return Promise.resolve(new ApiResult());
@@ -24,12 +24,12 @@ export class MockApi implements Api {
         return Promise.resolve(result);
     }
     getFeatures(): Promise<ApiResult<Feature[]>> {
-        let res = new ApiResult<Feature[]>(200, "{}");
+        let res = new ApiResult<Feature[]>(200, []);
         let features: Feature[] = [];
         for (let i = 0; i < 20; i++) {
             let feature = new Feature();
-            feature.id = Math.round(Math.random() * 100).toString();
-            feature.imageUrl = this.mockImage(feature.id);
+            feature.feature_id = Math.round(Math.random() * 100).toString();
+            feature.image_url = this.mockImage(feature.feature_id);
             feature.name = this.generateName();
             features.push(feature);
         }
@@ -40,7 +40,7 @@ export class MockApi implements Api {
         return Promise.resolve(new ApiResult());
     }
     recommend(): Promise<ApiResult<Place[]>> {
-        let res = new ApiResult<Place[]>(200, "{}");
+        let res = new ApiResult<Place[]>(200, []);
         let places: Place[] = [];
         for (let i = 0; i < 8; i++) {
             let place = new Place();
@@ -68,8 +68,20 @@ export class MockApi implements Api {
     placeDetail(place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
-    search(query: String): Promise<ApiResult<any>> {
-        return Promise.resolve(new ApiResult());
+    search(query: string): Promise<ApiResult<any>> {
+       let res = new ApiResult<Place[]>(200, []);
+        let places: Place[] = [];
+        let r = Math.round(Math.random() * 10)
+        for (let i = 0; i < r; i++) {
+            let place = new Place();
+            place.id = Math.round(Math.random() * 100).toString();
+            place.imageUrl = this.mockImage(place.id);
+            place.name = query;
+            place.description = "description of " + place.name;
+            places.push(place);
+        }
+        res.object = places;
+        return Promise.resolve(res);
     }
 
     private capFirst(string) {

@@ -6,23 +6,28 @@
   import {
     ListViewLoadOnDemandMode,
     ListViewViewType,
+    RadListView,
   } from "nativescript-ui-listview";
   import { Template } from "svelte-native/components";
-  import { ObservableArray } from "@nativescript/core";
-  import { named } from "~/util";
+  import { Frame, ObservableArray } from "@nativescript/core";
+  import { inject } from "~/util";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
   import SStorage from "~/data/storage";
-  import { Api } from "~/data/api";
+  import Api from "~/data/api";
+  import SearchBox from "./SearchBox.svelte";
 
-  const api: Api = named("Api", "mock");
-  const store: SStorage = named("SStorage");
-
+  const store: SStorage = inject("SStorage");
+  const api: Api = inject("Api");
   export let user: User = new User();
+  let oldPlaces = [];
   const places = new ObservableArray<Place>();
-  let visited = new ObservableArray<Place>();
-  let wishlist = new ObservableArray<Place>();
+  const visited = new ObservableArray<Place>();
+  const wishlist = new ObservableArray<Place>();
 
+  let placeGrid: RadListView = null;
+  let searchActive = false;
+ 
   store
     .get("visited")
     .then((val) => (val ? val : []))
@@ -47,12 +52,15 @@
   }
 
   function onPullToRefreshInitiated({ object }) {
-    api.recommend(user).then((res) => {
-      places.splice(0);
-      places.push(res.object);
-      object.notifyPullToRefreshFinished();
-    });
+    if (!searchActive)
+      api.recommend(user).then((res) => {
+        places.splice(0);
+        places.push(res.object);
+        object.notifyPullToRefreshFinished();
+      });
+    else object.notifyPullToRefreshFinished();
   }
+
   function onItemTap({ index }) {
     navigate({
       page: PlaceInfo,
@@ -64,8 +72,18 @@
     });
   }
 
-  // visited.push(fromJson(storeGetSync("visited", "[]")));
-  // wishlist.push(fromJson(storeGetSync("wishlist", "[]")));
+  function updateGrid(p) {
+    let removed = places.splice(0);
+    places.push(p);
+    placeGrid.refresh();
+    return removed;
+  }
+
+  function clearGrid() {
+    let removed = places.splice(0);
+    placeGrid.refresh();
+    return removed;
+  }
 
   visited.on(ObservableArray.changeEvent, (event) => {
     store.put("visited", visited.concat([]));
@@ -74,6 +92,26 @@
   wishlist.on(ObservableArray.changeEvent, (event) => {
     store.put("wishlist", wishlist.concat([]));
   });
+
+  function onShow() {
+    searchActive = true;
+    placeGrid = Frame.topmost().getViewById<RadListView>("placeGrid");
+    oldPlaces = clearGrid();
+  }
+
+  function onHide() {
+    searchActive = false;
+    updateGrid(oldPlaces);
+  }
+  function onSubmit(q: string) {
+    if (q.length > 2)
+      api.search(q).then((val) => {
+        updateGrid(val.object);
+      });
+  }
+  function onClear() {
+    clearGrid();
+  }
 </script>
 
 <page>
@@ -83,28 +121,33 @@
     fontClass="fas"
     fontIcon="font://&#xf406;"
   />
+  <gridLayout rows="auto, *">
+    <radListView
+      id="placeGrid"
+      row="1"
+      items={places}
+      loadOnDemandMode={ListViewLoadOnDemandMode.None}
+      recycleNativeView="always"
+      pullToRefresh="true"
+      on:pullToRefreshInitiated={onPullToRefreshInitiated}
+      on:itemTap={onItemTap}
+    >
+      <radListView.listViewLayout>
+        <listViewGridLayout />
+      </radListView.listViewLayout>
 
-  <radListView
-    items={places}
-    loadOnDemandMode={ListViewLoadOnDemandMode.None}
-    recycleNativeView="always"
-    pullToRefresh="true"
-    on:pullToRefreshInitiated={onPullToRefreshInitiated}
-    on:itemTap={onItemTap}
-  >
-    <radListView.listViewLayout>
-      <listViewGridLayout />
-    </radListView.listViewLayout>
+      <Template type={ListViewViewType.ItemView} let:item>
+        {#if item !== undefined}
+          <Card
+            imageUrl={item.imageUrl}
+            name={item.name}
+            height="150"
+            width="180"
+          />
+        {/if}
+      </Template>
+    </radListView>
 
-    <Template type={ListViewViewType.ItemView} let:item>
-      {#if item !== undefined}
-        <Card
-          imageUrl={item.imageUrl}
-          name={item.name}
-          height="150"
-          width="180"
-        />
-      {/if}
-    </Template>
-  </radListView>
+    <SearchBox row="1" {onShow} {onHide} {onSubmit} {onClear} />
+  </gridLayout>
 </page>

@@ -32,9 +32,9 @@ export class Place {
 }
 
 export class Feature {
-    id: string;
+    feature_id: string;
     name: string;
-    imageUrl: string;
+    image_url: string;
     private _selected: boolean = false;
 
     toggle() {
