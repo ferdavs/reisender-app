@@ -65,6 +65,7 @@
     navigate({
       page: PlaceInfo,
       props: {
+        user: user,
         place: places.getItem(index),
         visited: visited,
         wishlist: wishlist,

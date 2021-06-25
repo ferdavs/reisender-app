@@ -5,6 +5,7 @@
   "author": "Feruz Davletov",
   "version": "7.0.0",
   "main": "app.js",
+  "profiling": "timeline",
   "description": "Reisender app",
   "license": "LICENSE",
   "repository": "https://github.com/ferdavs/reisender",
