@@ -115,7 +115,7 @@ export class MockApi implements Api {
 
     private generateName() {
         var name1 = ['Tokyo', 'Delhi', 'Shanghai', 'São Paulo', 'Mexico City', 'Cairo', 'Mumbai', 'Beirut', 'Berlin', 'Beijing', 'Dhaka', 'Osaka', 'Moscow', 'New York City', 'Karachi', 'Buenos Aires', 'Istanbul', 'Kolkata', 'Manila', 'Sydney', 'Rio de Janeiro', 'Lagos', 'Los Angeles', 'Hawaii', 'Bangalore', 'Paris', 'Toulouse', 'Munich', 'Jakarta', 'Cologne', 'Dortmund', 'Bangkok', 'Seoul', 'Nagoya', 'London', 'Rome', 'Chicago', 'Ottawa', 'Lyon', 'Amsterdam', 'Hong Kong', 'Riyadh', 'Dubai', 'Santiago', 'Madrid', 'Barcelona', 'Houston', 'Dallas', 'Toronto', 'San Francisco', 'Miami', 'Singapore', 'Philadelphia', 'Atlanta', 'Alexandria', 'Bergen', 'Bruges', 'Bayreuth', 'Budapest', 'Cape Town', 'Cartagena', 'Chefchaouen', 'Casablanca', 'Chiang Mai', 'Copenhagen', 'Cusco', 'Doha', 'Dubrovnik', 'Edinburgh', 'Florence', 'Havana', 'Hanoi', 'Jaipur', 'Jerusalem', 'Kyoto', 'Ljubljana', 'Muscat', 'Porto', 'Prague', 'Quito', 'St Petersburg', 'Seville', 'Tallinn', 'Valletta', 'Monaco', 'Vienna', 'Venice', 'Zurich', 'Vancouver', 'Santa Fe', 'Essaouria', 'Sedona', 'Bordeaux', 'Charleston', 'Stuttgart', 'Hamburg', 'Lisbon', 'Santorini', 'Niagara Falls', 'Athens'];
-        var name = name1[this.getRandomInt(0, name1.length + 1)];
+        var name = name1[this.getRandomInt(0, name1.length)];
         return name;
     }
 }

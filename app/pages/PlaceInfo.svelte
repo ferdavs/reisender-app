@@ -93,7 +93,7 @@
       row="0"
       col="0"
       colSpan="2"
-      widith="75%"
+      widith="100%"
       class="border-props"
       roundedCornerRadius="12"
       roundBottomRight="true"
