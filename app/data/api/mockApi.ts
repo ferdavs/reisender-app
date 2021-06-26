@@ -5,6 +5,12 @@ import { profile } from "@nativescript/core";
 
 @injectable()
 export class MockApi implements Api {
+    wishListGet(user: User): Promise<ApiResult<Place[]>> {
+        return Promise.resolve(new ApiResult());
+    }
+    visitedListGet(user: User): Promise<ApiResult<Place[]>> {
+        return Promise.resolve(new ApiResult());
+    }
     private mockImage(id) {
         return "https://picsum.photos/id/" + id + "/300";
     }
@@ -17,7 +23,7 @@ export class MockApi implements Api {
     }
 
     @profile
-    loginFacebook(): Promise<ApiResult<User>> {
+    loginFacebook(user: User): Promise<ApiResult<User>> {
         return Promise.resolve(new ApiResult());
     }
     
@@ -51,7 +57,7 @@ export class MockApi implements Api {
     }
 
     @profile
-    recommend(): Promise<ApiResult<Place[]>> {
+    recommend(user:User): Promise<ApiResult<Place[]>> {
         let res = new ApiResult<Place[]>(200, []);
         let places: Place[] = [];
         for (let i = 0; i < 8; i++) {
@@ -83,11 +89,6 @@ export class MockApi implements Api {
     
     @profile
     visitedListDelete(user: User, place: Place): Promise<ApiResult<any>> {
-        return Promise.resolve(new ApiResult());
-    }
-    
-    @profile
-    placeDetail(place: Place): Promise<ApiResult<any>> {
         return Promise.resolve(new ApiResult());
     }
     

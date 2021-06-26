@@ -19,7 +19,7 @@
     navigate({ page: Register });
   }
 
-  function storeHandle(user: User, stored: boolean) {
+  function storeUser(user: User, stored: boolean) {
     if (!stored) {
       error("error storing user");
       return;
@@ -32,11 +32,14 @@
     user.password = sha.Sha256(password);
     api
       .login(user)
-      .then((res) => {
+      .then(async (res) => {
         user.loggedIn = res.success;
+
+        api.wishListGet(user).then((res) => store.put("wishlist", res.object));
+        api.visitedListGet(user).then((res) => store.put("visited", res.object));
         store
           .put("user", user)
-          .then((stored) => storeHandle(user, stored))
+          .then((stored) => storeUser(user, stored))
           .catch((error) => warn("cannot store user " + error));
       })
       .catch((err) => error(err.object.message));
@@ -61,7 +64,7 @@
         user.loggedIn = res.success;
         return store.put("user", user);
       })
-      .then((stored) => storeHandle(user, stored))
+      .then((stored) => storeUser(user, stored))
       .catch((error) => error(error));
   }
 
@@ -94,10 +97,10 @@
     <button text="Register" class="link" on:tap={onRegister} />
 
     <button text="Login" on:tap={onLogin} class="btn-large" />
-    <button
+    <!-- <button
       text="Facebook Login"
       on:tap={onFBLogin}
       class="fb-login-button btn-large"
-    />
+    /> -->
   </stackLayout>
 </page>

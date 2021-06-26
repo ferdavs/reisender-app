@@ -57,14 +57,14 @@
     width: 100%;
   }
   .error {
-    height: fit-content;
+    height: 20;
     width: 100%;
     text-align: center;
     color: whitesmoke;
     background-color: crimson;
   }
   .warn {
-    height: fit-content;
+    height: 20;
     width: 100%;
     text-align: center;
     background-color: orange;

@@ -38,21 +38,25 @@
   }
 
   function onRegister() {
-    if (isValid(pass1, pass2)) {
-      user.password = sha.Sha256(pass2);
-      api
-        .register(user)
-        .then((_) => {
-          user.loggedIn = true;
-          return store.put("user", user);
-        })
-        .then((stored) => storeHandle(user, stored))
-        .catch((error) => console.log("error user store : " + error))
-        .catch((error) => alert("Error: " + error.object.message));
-    } else {
+    if (!isValid(pass1, pass2)) {
       getCurrentPage().getViewById("pass1Text").shake();
       getCurrentPage().getViewById("pass2Text").shake();
+      return;
     }
+    if (user.username.trim().length == 0) {
+      getCurrentPage().getViewById("username").shake();
+      return;
+    }
+    user.password = sha.Sha256(pass2);
+    api
+      .register(user)
+      .then((_) => {
+        user.loggedIn = true;
+        return store.put("user", user);
+      })
+      .then((stored) => storeHandle(user, stored))
+      .catch((error) => console.log("error user store : " + error))
+      .catch((error) => alert("Error: " + error.object.message));
   }
 </script>
 
@@ -62,6 +66,7 @@
 
   <stackLayout class="layout">
     <textField
+      id="username"
       bind:text={user.username}
       hint="Username..."
       keyboardType="email"

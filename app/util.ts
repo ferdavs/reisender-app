@@ -14,9 +14,14 @@ const storage = new SecureStorage()
 
 export function inject<T>(type: string, name?: string): T {
     // log("named called: " + type + "  name: " + name)
-    return name
-        ? inversify.getNamed<T>(type, name)
-        : inversify.get<T>(type);
+    try {
+        return name
+            ? inversify.getNamed<T>(type, name)
+            : inversify.get<T>(type);
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 }
 
 export function bind<T>(type: string, to: any, name?: string) {
@@ -24,6 +29,23 @@ export function bind<T>(type: string, to: any, name?: string) {
     return name
         ? inversify.bind<T>(type).to(to).whenTargetNamed(name)
         : inversify.bind<T>(type).to(to).whenTargetIsDefault();
+}
+
+export function bindConstant<T>(type: string, to: any) {
+    // log("bind called: " + type + " to: " + to + "  name: " + name)
+    return inversify.bind<T>(type).toConstantValue(to);
+}
+
+
+export function toQuery(param: any): string {
+    var str = "";
+    for (var key in param) {
+        if (str != "") {
+            str += "&";
+        }
+        str += key + "=" + encodeURIComponent(param[key]);
+    }
+    return str.length == 0 ? "" : "?" + str;
 }
 
 export function toJson(val) {

@@ -43,13 +43,13 @@
     border-color: rgba(177, 177, 177, 0.333);
   }
   .label {
-    background: rgba(92, 92, 92, 0.349);
+    background: rgba(75, 75, 75, 0.349);
     border-radius: 5;
     padding: 2;
     margin: 0;
     color: rgb(255, 255, 255);
     text-align: center;
-    font-size: 12px;
+    font-size: 16px;
   }
   .check {
     padding: 2;

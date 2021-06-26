@@ -27,7 +27,7 @@
 
   let placeGrid: RadListView = null;
   let searchActive = false;
- 
+
   store
     .get("visited")
     .then((val) => (val ? val : []))
@@ -44,6 +44,7 @@
     places.push(res.object);
   });
 
+  
   function onAccount() {
     navigate({
       page: Account,

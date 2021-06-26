@@ -1,6 +1,7 @@
 <script async lang="ts">
   /// <reference path="./node_modules/nativescript-effects/tns-effects.d.ts" />
   import { getCurrentPage, ObservableArray } from "@nativescript/core";
+  import { log } from "@nativescript/core/profiling";
   import {
     ListViewLoadOnDemandMode,
     ListViewViewType,
@@ -16,21 +17,24 @@
   import Main from "./Main.svelte";
 
   export let user: User = null;
+  let title = "Choose at least 5";
   const api: Api = inject("Api");
   const store: SStorage = inject("SStorage");
-  const title = "Choose at least 5";
   const features = new ObservableArray<Feature>();
 
   api
     .getFeatures()
     .then((res) => features.push(res.object))
-    .catch((err) => console.log(err));
+    .catch((err) => log(err));
 
   function onItemTap({ index, object }) {
     let item = features.getItem(index);
     item.toggle();
     if (item.selected) user.features.push(item);
     else user.features.splice(user.features.indexOf(item), 1);
+    
+    if (user.features.length == 0) title = "Choose at least 5";
+    else title = "Choose at least 5/" + user.features.length;
     object.refresh();
   }
 

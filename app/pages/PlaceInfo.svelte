@@ -59,7 +59,7 @@
   
   function deleteVisited() {
     api
-      .visitedListAdd(user, place)
+      .visitedListDelete(user, place)
       .then((res) => {
         visited.splice(visited.indexOf(place), 1);
         inVisited = false;

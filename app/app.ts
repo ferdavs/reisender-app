@@ -12,7 +12,6 @@ import RadListViewElement from "svelte-native-nativescript-ui/listview"
 import { registerNativeViewElement } from "svelte-native/dom";
 const imageModule = require('@nativescript-community/ui-image');
 const tnsfx = require('nativescript-effects');
-import { profilingEnable } from "@nativescript/core";
 
 RadListViewElement.register();
 
@@ -21,7 +20,6 @@ registerNativeViewElement("imgCache", () => require("@nativescript-community/ui-
 Application.on(Application.launchEvent, () => {
     init("2919521278376314");
     imageModule.initialize({ isDownsampleEnabled: true })
-    profilingEnable('timeline');
 });
 
 svelteNative(App, {});

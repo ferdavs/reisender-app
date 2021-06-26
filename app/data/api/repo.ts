@@ -8,16 +8,21 @@ export class Repo implements Api {
     private api: Api;
     private store: SStorage;
     //for Api @named must be used here, cause Repo is default 
-    constructor(@inject("Api") @named('mock') api: Api, @inject("SStorage") store: SStorage) {
+    constructor(@inject("Api") @named('impl') api: Api, @inject("SStorage") store: SStorage) {
         this.api = api;
         this.store = store;
     }
-
+    wishListGet(user: User): Promise<ApiResult<Place[]>> {
+        return this.api.wishListGet(user);
+    }
+    visitedListGet(user: User): Promise<ApiResult<Place[]>> {
+        return this.api.visitedListGet(user);
+    }
     login(user: User): Promise<ApiResult<User>> {
         return this.api.login(user);
     }
-    loginFacebook(): Promise<ApiResult<User>> {
-        return this.api.loginFacebook();
+    loginFacebook(user: User): Promise<ApiResult<User>> {
+        return this.api.loginFacebook(user);
     }
     register(user: User): Promise<ApiResult<User>> {
         return this.api.register(user);
@@ -42,9 +47,6 @@ export class Repo implements Api {
     }
     visitedListDelete(user: User, place: Place): Promise<ApiResult<any>> {
         return this.api.visitedListDelete(user, place);
-    }
-    placeDetail(place: Place): Promise<ApiResult<any>> {
-        return this.api.placeDetail(place);
     }
     search(query: string): Promise<ApiResult<any>> {
         return this.api.search(query);

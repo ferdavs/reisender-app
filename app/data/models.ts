@@ -31,6 +31,11 @@ export class Place {
     info: string;
 }
 
+export class PlaceLists {
+    features: Place[];
+    wishlist: Place[];
+}
+
 export class Feature {
     feature_id: string;
     name: string;
