@@ -52,7 +52,7 @@ export class ApiImpl implements Api {
     private toPlace(w): Place {
         let p = new Place();
         p.id = w.place_id;
-        p.name = w.name_id;
+        p.name = w.name;
         p.imageUrl = w.image_url;
         return p;
     }

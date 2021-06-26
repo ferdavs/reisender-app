@@ -16,6 +16,7 @@
   import SStorage from "~/data/storage";
   import Api from "~/data/api";
   import SearchBox from "./SearchBox.svelte";
+  import { log } from "@nativescript/core/profiling";
 
   const store: SStorage = inject("SStorage");
   const api: Api = inject("Api");
@@ -44,7 +45,6 @@
     places.push(res.object);
   });
 
-  
   function onAccount() {
     navigate({
       page: Account,
@@ -54,11 +54,17 @@
 
   function onPullToRefreshInitiated({ object }) {
     if (!searchActive)
-      api.recommend(user).then((res) => {
-        places.splice(0);
-        places.push(res.object);
-        object.notifyPullToRefreshFinished();
-      });
+      api
+        .recommend(user)
+        .then((res) => {
+          places.splice(0);
+          places.push(res.object);
+          object.notifyPullToRefreshFinished();
+        })
+        .catch((e) => {
+          log(e);
+          object.notifyPullToRefreshFinished();
+        });
     else object.notifyPullToRefreshFinished();
   }
 

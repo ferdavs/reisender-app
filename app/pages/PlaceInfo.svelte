@@ -92,6 +92,7 @@
       stretch="aspectFill"
       row="0"
       col="0"
+      colSpan="2"
       widith="75%"
       class="border-props"
       roundedCornerRadius="12"
@@ -100,7 +101,7 @@
       roundTopLeft="true"
       roundTopRight="true"
     />
-    <htmlView editable="false" html={info} row="0" col="1" class="desc" />
+    <!-- <htmlView editable="false" html={info} row="0" col="1" class="desc" /> -->
     <htmlView
       editable="false"
       html={description}
