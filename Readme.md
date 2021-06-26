@@ -5,12 +5,12 @@ Reisender app
 You can get started with this using `degit`:
 
 ```bash
-npx degit ferdavs/reisender reisender
+npx degit ferdavs/reisender-app reisender-app
 cd reisender
 npm install
 ```
 
-Your svelte-native app will be found in the `reisender` folder.
+Your svelte-native app will be found in the `reisender-app` folder.
 
 Once installed use the `ns preview`, `ns build` or `ns run` commands as for a normal NativeScript application.
 
