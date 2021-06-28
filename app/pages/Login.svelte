@@ -36,13 +36,18 @@
         user.loggedIn = res.success;
 
         api.wishListGet(user).then((res) => store.put("wishlist", res.object));
-        api.visitedListGet(user).then((res) => store.put("visited", res.object));
+        api
+          .visitedListGet(user)
+          .then((res) => store.put("visited", res.object));
         store
           .put("user", user)
           .then((stored) => storeUser(user, stored))
-          .catch((error) => warn("cannot store user " + error));
+          .catch((error) => warn("cannot store user " + error.message));
       })
-      .catch((err) => error(err));
+      .catch((err) => {
+        if (err.message.trim() === "") error("user does not exists");
+        else error(err.message)
+      });
   }
 
   function onFBLogin() {
@@ -65,7 +70,7 @@
         return store.put("user", user);
       })
       .then((stored) => storeUser(user, stored))
-      .catch((error) => error(error));
+      .catch((e) => error(e.message));
   }
 
   let infoText: string = null;

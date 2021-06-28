@@ -55,8 +55,8 @@
         return store.put("user", user);
       })
       .then((stored) => storeHandle(user, stored))
-      .catch((e) => {error(e);})
-      .catch((e) => warn("error user store : " + e));
+      .catch((e) => {error(e.message);})
+      .catch((e) => warn("error user store : " + e.message));
   }
 
   let infoText: string = null;
