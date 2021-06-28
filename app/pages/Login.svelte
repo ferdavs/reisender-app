@@ -42,7 +42,7 @@
           .then((stored) => storeUser(user, stored))
           .catch((error) => warn("cannot store user " + error));
       })
-      .catch((err) => error(err.object.message));
+      .catch((err) => error(err));
   }
 
   function onFBLogin() {

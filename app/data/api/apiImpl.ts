@@ -18,17 +18,19 @@ export class ApiImpl implements Api {
             method: 'DELETE',
         });
         // .then(r => r.content.toJSON());
-        // .catch((e: HttpResponse) => new ApiResult<any>(e.statusCode, { message: e.content }));
     }
-
+    private valid(r: HttpResponse) {
+        if (r.statusCode >= 200 && r.statusCode < 300)
+            return r.content.toJSON();
+        else throw new Error(r.content.toJSON().error)
+    }
     private post(url: string, data: string) {
         return Http.request({
             url: url,
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             content: data
-        }).then(r => r.content.toJSON());
-        // .catch((e: HttpResponse) => new ApiResult<any>(e.statusCode, { message: e.content }));
+        }).then(r => this.valid(r));
     }
 
     private put(url: string, data: string) {
@@ -37,16 +39,14 @@ export class ApiImpl implements Api {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             content: data
-        }).then(r => r.content.toJSON());
-        // .catch((e: HttpResponse) => new ApiResult<any>(e.statusCode, { message: e.content }));
+        }).then(r => this.valid(r));
     }
 
     private get(url: string, param: any) {
         return Http.request({
             url: url + toQuery(param),
             method: 'GET',
-        }).then(r => r.content.toJSON());
-        // .catch((e: HttpResponse) => new ApiResult<any>(e.statusCode, { message: e.content }));
+        }).then(r => this.valid(r));
     }
 
     private toPlace(w): Place {

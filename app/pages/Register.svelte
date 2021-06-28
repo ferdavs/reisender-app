@@ -55,14 +55,22 @@
         return store.put("user", user);
       })
       .then((stored) => storeHandle(user, stored))
-      .catch((error) => console.log("error user store : " + error))
-      .catch((error) => alert("Error: " + error.object.message));
+      .catch((e) => {error(e);})
+      .catch((e) => warn("error user store : " + e));
+  }
+
+  let infoText: string = null;
+  function error(text: string) {
+    infoText = "Error: " + text;
+  }
+  function warn(text: string) {
+    infoText = "Warning: " + text;
   }
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <page>
-  <ActionBar title="Reisender" />
+  <ActionBar title="Reisender" bind:infoText />
 
   <stackLayout class="layout">
     <textField
