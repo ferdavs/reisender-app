@@ -29,17 +29,23 @@
   let placeGrid: RadListView = null;
   let searchActive = false;
 
-  store
-    .get("visited")
-    .then((val) => (val ? val : []))
+  api
+    .wishListGet(user)
+    .then((res) => {
+      store.put("wishlist", res.object);
+      return res.object;
+    })
+    .then((val) => wishlist.push(val))
+    .catch((err) => console.log(err));
+  api
+    .visitedListGet(user)
+    .then((res) => {
+      store.put("visited", res.object);
+      return res.object;
+    })
     .then((val) => visited.push(val))
     .catch((err) => console.log(err));
 
-  store
-    .get("wishlist")
-    .then((val) => (val ? val : []))
-    .then((val) => wishlist.push(val))
-    .catch((err) => console.log(err));
 
   api.recommend(user).then((res) => {
     places.push(res.object);

@@ -34,11 +34,6 @@
       .login(user)
       .then(async (res) => {
         user.loggedIn = res.success;
-
-        api.wishListGet(user).then((res) => store.put("wishlist", res.object));
-        api
-          .visitedListGet(user)
-          .then((res) => store.put("visited", res.object));
         store
           .put("user", user)
           .then((stored) => storeUser(user, stored))
