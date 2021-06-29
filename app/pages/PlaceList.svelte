@@ -27,6 +27,9 @@
     });
     object.refresh();
   };
+
+  visited._notifyLengthChange();
+  wishlist._notifyLengthChange();
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->

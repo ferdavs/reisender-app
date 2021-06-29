@@ -72,7 +72,7 @@
 <page>
   <ActionBar title="Reisender" bind:infoText />
 
-  <stackLayout class="layout">
+  <stackLayout class="layout margin-rl-16">
     <textField
       id="username"
       bind:text={user.username}
