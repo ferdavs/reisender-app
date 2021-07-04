@@ -34,7 +34,7 @@
     else user.features.splice(user.features.indexOf(item), 1);
     
     if (user.features.length == 0) title = "Choose at least 5";
-    else title = "Choose at least 5/" + user.features.length;
+    else title = "Choose at least "+user.features.length+"/5"  ;
     object.refresh();
   }
 
