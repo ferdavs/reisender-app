@@ -36,6 +36,9 @@ export function bindConstant<T>(type: string, to: any) {
     return inversify.bind<T>(type).toConstantValue(to);
 }
 
+export function inList(list, place){
+    return list.filter((value) => value.id == place.id).length > 0;
+}
 
 export function toQuery(param: any): string {
     var str = "";

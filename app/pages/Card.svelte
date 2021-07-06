@@ -6,6 +6,8 @@
   export let height = "150";
   export let width = "180";
   export let selected = false;
+  export let inWishlist = false;
+  export let inVisited = false;
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -32,6 +34,22 @@
       </formattedString>
     </label>
   {/if}
+
+  {#if inWishlist}
+    <label top={to_number(height) - 28} left={16} style="font-size: 18;">
+      <formattedString>
+        <span text="&#x2b50;" class="fas" />
+      </formattedString>
+    </label>
+  {/if}
+
+  {#if inVisited}
+    <label top={to_number(height) - 28} left={48} style="font-size: 18;">
+      <formattedString>
+        <span text="&#x2713;" class="fas" />
+      </formattedString>
+    </label>
+  {/if}
 </absoluteLayout>
 
 <style>
@@ -50,6 +68,9 @@
     color: rgb(255, 255, 255);
     text-align: center;
     font-size: 16px;
+  }
+  .list {
+    font-size: large;
   }
   .check {
     padding: 2;

@@ -10,7 +10,7 @@
   } from "nativescript-ui-listview";
   import { Template } from "svelte-native/components";
   import { Frame, ObservableArray } from "@nativescript/core";
-  import { inject } from "~/util";
+  import { inject, inList } from "~/util";
   import PlaceInfo from "./PlaceInfo.svelte";
   import ActionBar from "./ActionBar.svelte";
   import SStorage from "~/data/storage";
@@ -45,7 +45,6 @@
     })
     .then((val) => visited.push(val))
     .catch((err) => console.log(err));
-
 
   api.recommend(user).then((res) => {
     places.push(res.object);
@@ -157,6 +156,7 @@
             name={item.name}
             height="150"
             width="180"
+            inWishlist={inList(wishlist, item)}
           />
         {/if}
       </Template>
