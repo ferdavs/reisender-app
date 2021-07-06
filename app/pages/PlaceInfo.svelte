@@ -16,8 +16,6 @@
   let wiki: Wiki = inject("Wiki");
   let api: Api = inject("Api");
   let description = place.description;
-  let info = "";
-
   let inVisited = visited.filter((value) => value.id == place.id).length > 0;
   let inWishlist = wishlist.filter((value) => value.id == place.id).length > 0;
 
@@ -56,7 +54,7 @@
         log(e);
       });
   }
-  
+
   function deleteVisited() {
     api
       .visitedListDelete(user, place)
@@ -111,9 +109,10 @@
       class="desc border-props"
     />
     <button
+      id="wishlistButton"
       row="2"
       col="0"
-      class="btn"
+      class="{inWishlist ? "btn red" : "btn"}"
       on:tap={inWishlist ? deleteWishlist : addWishlist}
     >
       <formattedString>
@@ -128,9 +127,10 @@
     </button>
 
     <button
+      id="visitedButton"
       row="2"
       col="1"
-      class="btn"
+      class="{inVisited ? "btn red" : "btn"}"
       on:tap={inVisited ? deleteVisited : addVisited}
     >
       <formattedString>
@@ -157,6 +157,9 @@
     font-weight: bold;
     font-size: 18;
     height: 64;
+  }
+  .red {
+    background-color: #ee5a7a;
   }
   .desc {
     font-size: 20;
