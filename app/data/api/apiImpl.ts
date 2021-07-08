@@ -106,8 +106,8 @@ export class ApiImpl implements Api {
         return this.get(this.url + "/api/users/recommend/" + user.id, {})
             .then((res: any) => {
                 let places = [
-                    ...res.feature_based.map(p => this.toPlace(p)),
-                    ...res.wish_based.map(p => this.toPlace(p))
+                    ...res.wish_based.map(p => this.toPlace(p)),
+                    ...res.feature_based.map(p => this.toPlace(p))
                 ];
                 return new ApiResult(200, places);
             });
