@@ -13,7 +13,7 @@
     "@nativescript/core": "~7.0.0",
     "@nativescript/secure-storage": "^3.0.0",
     "@nativescript/theme": "^2.3.4",
-    "@nativescript/webpack": "3.0.0",
+    "@nativescript/webpack": "5.0.21",
     "@plmservices/nativescript-sha": "^2.0.2",
     "inversify": "^5.1.1",
     "nativescript-apiclient": "^3.0.0",
